@@ -9,7 +9,6 @@ const { auth } = NextAuth(authConfig);
 export default auth(async function middleware(req: NextRequest) {
   const url = req.nextUrl.clone(); // clone pour pouvoir modifier
   const pathname = url.pathname;
-  
     // 1. Redirection de la racine vide vers /fr
   if (pathname === "/" || pathname === "") {
     return NextResponse.redirect(new URL(`/fr`, req.url));
