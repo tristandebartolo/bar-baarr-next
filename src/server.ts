@@ -6,7 +6,7 @@ import "../envConfig";
 
 const dev = process.env.NEXT_PUBLIC_DRUPAL_ENV !== "production";
 const hostname = dev ? process.env.NEXT_PUBLIC_DRUPAL_HOSTNAME_LOCAL : process.env.NEXT_PUBLIC_DRUPAL_HOSTNAME_FRONT;
-const port = dev ? 3000 : 80;
+const port = dev ? 3000 : 8080;
 
 // console.log("process", process.env);
 // when using middleware `hostname` and `port` must be provided below
