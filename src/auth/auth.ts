@@ -17,7 +17,7 @@ export const {handlers, signIn, signOut, auth} = NextAuth(() => ({
 	providers: [
 		Credentials(
 			{
-				id: "credentialsLogin",
+				id: "credentials",
 				credentials: {
 					username: {
 						label: "Nom utilisateur",

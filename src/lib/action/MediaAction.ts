@@ -191,8 +191,7 @@ export async function authenticate(
   try {
     await signIn("credentials", {
       username: formData.get("username"),
-      password: formData.get("password"),
-      redirectTo: formData.get("redirectTo") as string | undefined,
+      password: formData.get("password")
     });
   } catch (error) {
     if (error instanceof AuthError) {
@@ -203,6 +202,6 @@ export async function authenticate(
           return "Une erreur est survenue.";
       }
     }
-    throw error; // important : Next.js gère la redirection si erreur
+    throw error;
   }
 }
