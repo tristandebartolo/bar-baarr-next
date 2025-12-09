@@ -13,7 +13,7 @@ import { Session } from "next-auth";
 
 const dev = process.env.NEXT_PUBLIC_DRUPAL_ENV !== "production";
 const hostname = dev ? 'http://' + process.env.NEXT_PUBLIC_DRUPAL_HOSTNAME_LOCAL : process.env.NEXT_PUBLIC_DRUPAL_HOSTNAME_FRONT;
-const port = dev ? 3000 : 8080;
+const port = dev ? 3000 : 80;
 // Connexion Websocket
 // const socket: Socket = io("http://localhost:3000");
 const socket: Socket = io(`${hostname}:${port}`);
