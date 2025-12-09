@@ -1,0 +1,13 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.baseParagraphEmbed = exports.baseArticleUser = exports.baseArticleTranslations = exports.baseArticleMeta = exports.baseArticle = exports.baseArticles = exports.basePath = exports.baseHome = exports.baseRs = exports.apiLink = void 0;
+exports.apiLink = process.env.DRUPAL_HOSTNAME;
+exports.baseRs = process.env.JOURNAL_API;
+exports.baseHome = process.env.DRUPAL_LOAD_HOME;
+exports.basePath = process.env.DRUPAL_HOSTNAME;
+exports.baseArticles = process.env.DRUPAL_LOAD_ARTICLES;
+exports.baseArticle = process.env.DRUPAL_LOAD_ARTICLE;
+exports.baseArticleMeta = process.env.DRUPAL_LOAD_META;
+exports.baseArticleTranslations = process.env.DRUPAL_LOAD_TRANSLATIONS;
+exports.baseArticleUser = process.env.DRUPAL_LOAD_USER;
+exports.baseParagraphEmbed = process.env.DRUPAL_LOAD_EMBED;

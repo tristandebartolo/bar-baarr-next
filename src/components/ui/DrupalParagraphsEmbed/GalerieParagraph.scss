@@ -1,0 +1,36 @@
+.g-cols {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  align-items: flex-start;
+  &.g-cols-2 {
+    > div {
+      width: calc(50% - 15px);
+    }
+  }
+  &.g-cols-3 {
+    > div {
+      width: calc(33.333% - 15px);
+    }
+  }
+  &.g-cols-4 {
+    > div {
+      width: calc(25% - 12px);
+    }
+  }
+}
+
+.prgh-articles {
+  h2 {
+    font-size: 1.6rem;
+    margin-bottom: 10px;
+  }
+  h3 {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+  }
+  h4 {
+    font-size: 1rem;
+    margin-bottom: 10px;
+  }
+}
