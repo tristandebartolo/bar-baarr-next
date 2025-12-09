@@ -17,7 +17,7 @@ function PageLanding({ node, locale }: { node: HomeNode, locale: string }) {
   return (
     <main className="min-h-screen">
       {sections?.map((section: LayoutSection) => {
-        console.log("section", section);
+        // console.log("section", section);
         // if (region.items.lenght === 0) return null;
 
         const bgColor =

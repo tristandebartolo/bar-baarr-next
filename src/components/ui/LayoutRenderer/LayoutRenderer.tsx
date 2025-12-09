@@ -144,7 +144,7 @@ const renderBlock = (block: LayoutBlock): React.ReactNode => {
 export default function LayoutRenderer({ blocks, settings }: { blocks?: LayoutBlock[], settings?: LayoutRegionSettings }) {
   if (!blocks?.length) return null;
 
-  console.log('settings', settings)
+  // console.log('settings', settings)
   return (
     <>
       {blocks.map((block, i) => (

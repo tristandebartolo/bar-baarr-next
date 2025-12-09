@@ -36,7 +36,7 @@ export default async function Page({
     return notFound();
   }
 
-  console.log("accueil", accueil);
+  // console.log("accueil", accueil);
 
   return (
     <PageLanding node={accueil.node} locale={locale} />
