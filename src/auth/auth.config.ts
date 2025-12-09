@@ -5,26 +5,36 @@ export const authConfig = {
     signIn: "/fr/club",
   },
   callbacks: {
-    authorized({ auth, request: { nextUrl } }) {
-      const isLoggedIn = !!auth?.user;
-      // console.log('isLoggedIn', isLoggedIn)
-      const isOnDashboard = nextUrl.pathname.startsWith("/fr/dashboard");
+    authorized({ auth, request: { nextUrl, url } }) {
+      
+      console.log('currentHost', url)
 
+      const isLoggedIn = !!auth?.user;
+      let pathname = "/";
+
+      try {
+        // Cas normal : request.url est une URL valide
+        pathname = new URL(url).pathname;
+      } catch {
+        // Cas Vercel preview pourri : request.url = "//xxxx.vercel.app:3000/fr/club"
+        // ou nextUrl.pathname contient le double slash + port
+        const raw = nextUrl.pathname || url || "";
+        pathname = raw
+          .replace(/^\/\/[^\/]+(:\d+)?/, "") // supprime //domaine:3000
+          .split("?")[0]
+          .split("#")[0] || "/";
+      }
+
+
+      const isOnDashboard = pathname.startsWith("/fr/dashboard");
       if (isOnDashboard) {
         if (isLoggedIn) return true;
-        // console.log('isOnDashboard', isOnDashboard);
         return Response.redirect(new URL("/fr/club", nextUrl));
-        // return false; // Redirect unauthenticated users to login page
-      } else if (isLoggedIn) {
-        // return Response.redirect(new URL("/dashboard", nextUrl));
       }
-      console.log('nextUrl.pathname', nextUrl.pathname)
-      const isOnLoginPage = nextUrl.pathname.startsWith("/fr/club");
 
-      if (isOnLoginPage) {
-        if (isLoggedIn) {
-          return Response.redirect(new URL("/fr", nextUrl));
-        }
+      const isOnLoginPage = pathname.startsWith("/fr/club");
+      if (isLoggedIn && isOnLoginPage) {
+        return Response.redirect(new URL("/fr", nextUrl));
       }
 
       return true;
