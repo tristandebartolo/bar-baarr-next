@@ -25,6 +25,9 @@ export const authConfig = {
           .split("#")[0] || "/";
       }
 
+      console.log('currentHost pathname', pathname)
+      console.log('currentHost pathname', nextUrl.pathname)
+
 
       const isOnDashboard = pathname.startsWith("/fr/dashboard");
       if (isOnDashboard) {
