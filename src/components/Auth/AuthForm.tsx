@@ -7,7 +7,11 @@ import { useSearchParams } from "next/navigation";
 
 export default function AuthForm() {
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl") || "/fr";
+
+  const dev = process.env.NEXT_PUBLIC_DRUPAL_ENV !== "production";
+  const hostname = dev ? process.env.NEXT_PUBLIC_DRUPAL_HOSTNAME_LOCAL : process.env.NEXT_PUBLIC_DRUPAL_HOSTNAME_FRONT;
+
+  const callbackUrl = searchParams.get("callbackUrl") || `${hostname}/fr`;
 
   // useActionState retourne exactement le bon type pour <form action>
   const [errorMessage, formAction, isPending] = useActionState(
