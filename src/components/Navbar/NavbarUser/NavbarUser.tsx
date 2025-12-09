@@ -47,7 +47,7 @@ export function NavbarUser({ sessionUser }: { sessionUser?: SessionUser}) {
               </Link>
             </li>
             <li>
-              <button onClick={() => signOut()} type="button">
+              <button onClick={() => signOut({ redirectTo: "/fr" })} type="button">
                 <span className="i-gntl--power_settings_new"></span>
                 <span className="visually-hidden">Déconnexion</span>
               </button>

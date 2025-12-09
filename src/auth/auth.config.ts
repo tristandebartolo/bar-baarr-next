@@ -18,7 +18,7 @@ export const authConfig = {
       } else if (isLoggedIn) {
         // return Response.redirect(new URL("/dashboard", nextUrl));
       }
-
+      console.log('nextUrl.pathname', nextUrl.pathname)
       const isOnLoginPage = nextUrl.pathname.startsWith("/fr/club");
 
       if (isOnLoginPage) {
