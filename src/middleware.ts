@@ -10,17 +10,15 @@ export default auth(async function middleware(req: NextRequest) {
   const url = req.nextUrl.clone(); // clone pour pouvoir modifier
   const pathname = url.pathname;
   
-  // 1. Redirection racine → /fr
+    // 1. Redirection de la racine vide vers /fr
   if (pathname === "/" || pathname === "") {
-    url.pathname = "/fr";
-    return NextResponse.redirect(url);
+    return NextResponse.redirect(new URL(`/fr`, req.url));
   }
 
   // 2. Extraction de la locale depuis l’URL (ex: /fr/journal/xxx → "fr"
-  const locale = pathname.split("/")[1] || "fr";
+  const locale = pathname.split("/")[1];
 
-  // 3. Force la locale côté serveur Node.js (C’EST ÇA QUI RÉSOUT LE BUG DE DATE)
-  // → Intl.DateTimeFormat() utilisera maintenant la bonne langue
+  // 3. Force la locale côté serveur Node.js
   process.env.LANG = locale;
   process.env.LC_ALL = locale;
   process.env.LANGUAGE = locale;
@@ -42,6 +40,7 @@ export const config = {
      * - _next/image (image optimization)
      * - favicon.ico, sitemap, robots.txt, images
      */
-    "/((?!api|_next/static|_next/image|manifest.json|favicon.ico|sitemap.xml|robots.txt|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico)$).*)",
+    // "/((?!api|_next/static|_next/image|manifest.json|favicon.ico|sitemap.xml|robots.txt|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico)$).*)",
+    '/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)',
   ],
 };
