@@ -39,7 +39,7 @@ export default async function Page({ params }: PageProps) {
     return notFound();
   }
 
-  console.log("post", post);
+  // console.log("post", post);
 
   // const Component = node?.bundle === "article" ? PageArticle : PageLanding;
 
