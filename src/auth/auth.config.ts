@@ -7,12 +7,24 @@ export const authConfig = {
   callbacks: {
     authorized({ auth, request: { nextUrl, url } }) {
       
-      console.log('currentHost', url)
+      console.log('currentHost', nextUrl)
 
       const isLoggedIn = !!auth?.user;
+      // const nUrl = nextUrl.pathname || null;
+
       let pathname = "/";
 
-      console.log('new URL(url).pathname', new URL(url).pathname)
+      // const nUrl = "//next.trstn.fr:3000/fr/club";
+
+      // nUrl.startsWith("/fr/dashboard");
+
+
+      // const tst_pathname = nUrl
+      //     .replace(/^\/\/[^\/]+(?::\d+)?/, "") // supprime //domaine:3000
+      //     .split("?")[0]
+      //     .split("#")[0] || "/";
+
+      // console.log('new URL(url).pathname -------- ', tst_pathname)
 
       try {
         // Cas normal : request.url est une URL valide
@@ -29,8 +41,8 @@ export const authConfig = {
         console.log('CATCH', pathname)
       }
 
-      console.log('currentHost pathname', pathname)
-      console.log('currentHost nextUrl.pathname', nextUrl.pathname)
+      // console.log('currentHost pathname', pathname)
+      // console.log('currentHost nextUrl.pathname', nextUrl.pathname)
 
 
       const isOnDashboard = pathname.startsWith("/fr/dashboard");

@@ -10,7 +10,8 @@ import {
 	baseArticle,
 	baseRs,
 	baseArticleMeta,
-	baseParagraphEmbed
+	baseParagraphEmbed,
+	hostUrlRedirect
 } from "@/lib/helpers/index";
 import {SdUserType} from "../types";
 
@@ -191,7 +192,8 @@ export async function authenticate(
   try {
     await signIn("credentials", {
       username: formData.get("username"),
-      password: formData.get("password")
+      password: formData.get("password"),
+	  redirectTo: hostUrlRedirect + '/fr'
     });
   } catch (error) {
     if (error instanceof AuthError) {

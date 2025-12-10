@@ -39,7 +39,7 @@ export const config = {
      * - _next/image (image optimization)
      * - favicon.ico, sitemap, robots.txt, images
      */
-    // "/((?!api|_next/static|_next/image|manifest.json|favicon.ico|sitemap.xml|robots.txt|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico)$).*)",
-    '/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)',
+    "/((?!api|_next/static|_next/image|manifest.json|favicon.ico|sitemap.xml|robots.txt|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico)$).*)",
+    // '/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)',
   ],
 };

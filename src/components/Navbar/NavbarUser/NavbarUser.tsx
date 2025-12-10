@@ -7,6 +7,10 @@ import { useParams } from "next/navigation";
 import Link from "next/link";
 // Types
 import { SessionUser } from "@/lib/types/typesUtils";
+// Tools
+import { hostUrlRedirect } from "@/lib/helpers/pathTools";
+
+console.log('hostUrlRedirect', hostUrlRedirect)
 // Style
 // import style from "./NavbarUser.module.css";
 
@@ -47,7 +51,7 @@ export function NavbarUser({ sessionUser }: { sessionUser?: SessionUser}) {
               </Link>
             </li>
             <li>
-              <button onClick={() => signOut({ redirectTo: "/fr" })} type="button">
+              <button onClick={() => signOut({ redirectTo:  hostUrlRedirect + '/fr' })} type="button">
                 <span className="i-gntl--power_settings_new"></span>
                 <span className="visually-hidden">Déconnexion</span>
               </button>

@@ -8,3 +8,6 @@ export const baseArticleMeta = process.env.DRUPAL_LOAD_META;
 export const baseArticleTranslations = process.env.DRUPAL_LOAD_TRANSLATIONS;
 export const baseArticleUser = process.env.DRUPAL_LOAD_USER;
 export const baseParagraphEmbed = process.env.DRUPAL_LOAD_EMBED;
+
+const dev = process.env.NEXT_PUBLIC_DRUPAL_ENV !== "production";
+export const hostUrlRedirect = dev ? `${process.env.NEXT_PUBLIC_DRUPAL_HOSTNAME_LOCAL}:3000` : process.env.NEXT_PUBLIC_DRUPAL_HOSTNAME_FRONT;
