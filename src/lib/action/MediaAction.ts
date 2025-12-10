@@ -193,7 +193,7 @@ export async function authenticate(
     await signIn("credentials", {
       username: formData.get("username"),
       password: formData.get("password"),
-	  redirectTo: hostUrlRedirect + '/fr'
+	  redirectTo: '/fr'
     });
   } catch (error) {
     if (error instanceof AuthError) {

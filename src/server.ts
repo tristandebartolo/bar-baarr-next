@@ -17,6 +17,7 @@ app.prepare().then(() => {
 	const io = new Server(httpServer, {cookie: true});
 
 	io.on("connection", (socket) => {
+
 		console.log("socket.handshake.headers.user", socket.id);
 
 		socket.on("player.game.join", (data, callback) => {
@@ -34,6 +35,6 @@ app.prepare().then(() => {
 		console.error(err);
 		process.exit(1);
 	}).listen(port, () => {
-		console.log(`> Ready on ${dev ? 'http://' : '' }${hostname}:${port}`);
+		console.log(`> Ready on ${hostname}:${port}`);
 	});
 });

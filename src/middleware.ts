@@ -7,6 +7,7 @@ import { authConfig } from "@/auth/auth.config";
 const { auth } = NextAuth(authConfig);
 
 export default auth(async function middleware(req: NextRequest) {
+  
   const url = req.nextUrl.clone(); // clone pour pouvoir modifier
   const pathname = url.pathname;
     // 1. Redirection de la racine vide vers /fr
