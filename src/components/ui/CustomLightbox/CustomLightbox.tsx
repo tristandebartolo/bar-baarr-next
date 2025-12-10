@@ -226,7 +226,7 @@ export default function CustomLightbox({
 
   return (
     <div
-      className="bg-bgcontainer fixed inset-0 z-[9999] flex flex-col dark:text-white"
+      className="bg-bgcontainer fixed inset-0 z-9999 flex flex-col dark:text-white"
       onClick={(e) => e.target === e.currentTarget && onClose()}
     >
       {/* Header */}
@@ -259,7 +259,7 @@ export default function CustomLightbox({
               </svg>
             </button>
 
-            <button onClick={resetZoomAndPan} className="min-w-[4rem] px-3 text-sm font-medium">
+            <button onClick={resetZoomAndPan} className="min-w-16 px-3 text-sm font-medium">
               {(zoom * 100).toFixed(0)}%
             </button>
 

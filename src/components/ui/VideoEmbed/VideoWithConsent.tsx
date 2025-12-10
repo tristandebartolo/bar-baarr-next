@@ -46,7 +46,7 @@ export default function VideoWithConsent({ url }: { url: string }) {
   // On affiche TOUJOURS le placeholder → HTML identique serveur/client
   if (!isMounted || (cookieId && !hasConsent)) {
     return (
-      <div className="prgh-video-wrapper relative aspect-video overflow-hidden rounded-xl bg-gradient-to-br from-gray-200 to-white dark:from-neutral-800 dark:to-neutral-950">
+      <div className="prgh-video-wrapper relative aspect-video overflow-hidden rounded-xl bg-linear-to-br from-gray-200 to-white dark:from-neutral-800 dark:to-neutral-950">
         <div className="absolute inset-0 z-10 flex items-center justify-center p-8">
           <div className="prgh-video-info max-w-md rounded-2xl p-8 text-center">
             <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-gray-200 dark:bg-neutral-950">

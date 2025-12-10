@@ -44,7 +44,7 @@ export default async function RootLayout({
       <SessionProvider session={session}>
         <FrontContextProvider>
           <body
-            className={`bg-gray-800 bg-white antialiased`}
+            className={`bg-white dark:bg-gray-800 antialiased`}
             suppressHydrationWarning
           >
             <div className="h-screen w-screen flex-col">
