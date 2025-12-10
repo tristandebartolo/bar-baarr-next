@@ -13,6 +13,7 @@ const session: SessionType = {
 };
 
 export const {handlers, signIn, signOut, auth} = NextAuth(() => ({
+	trustHost: true,
 	...authConfig,
 	providers: [
 		Credentials(
@@ -105,7 +106,5 @@ export const {handlers, signIn, signOut, auth} = NextAuth(() => ({
 			}
 			return session;
 		}
-	}
-
-
+	},
 }));
