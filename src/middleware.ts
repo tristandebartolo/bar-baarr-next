@@ -16,7 +16,7 @@ export default auth(async function middleware(req: NextRequest) {
   }
 
   // 2. Locale (inchangée, safe)
-  const locale = pathname.split("/")[1] || "fr";
+  const locale = pathname.split("/")[1] && pathname.split("/")[1] !== "api" ? pathname.split("/")[1] : "fr";
   process.env.LANG = locale;
   process.env.LC_ALL = locale;
   process.env.LANGUAGE = locale;
