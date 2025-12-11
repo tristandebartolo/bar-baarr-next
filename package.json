@@ -8,7 +8,7 @@
 		"start": "next start",
 		"lint": "eslint",
 		"ndmn": "nodemon",
-		"ndmn-build": "next build && tsc --project tsconfig.server.json",
+		"ndmn-build": "next build && tsc --project tsconfig.server.json && ./strip-next-version.sh",
 		"ndmn-start": "cross-env NODE_ENV=production node public/src/server.js"
 	},
 	"dependencies": {
