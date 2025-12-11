@@ -51,3 +51,4 @@ yarn.lock
 old.env.prod.txt
 .tailwind-mangle-map.json
 .tw-patch-classes.json
+.tw-patch
