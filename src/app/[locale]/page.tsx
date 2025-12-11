@@ -10,9 +10,9 @@ type PropsMetatags = {
   params: Promise<{ locale: string }>;
 };
 // generateMetadata
-export async function generateMetadata(
-  { params }: PropsMetatags,
-): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: PropsMetatags): Promise<Metadata> {
   // const locale = (await params).locale
   const { locale } = await params;
   const accueil = await getMetatags("0", "nid", "home", locale);
@@ -38,7 +38,5 @@ export default async function Page({
 
   // console.log("accueil", accueil);
 
-  return (
-    <PageLanding node={accueil.node} locale={locale} />
-  );
+  return <PageLanding node={accueil.node} locale={locale} />;
 }

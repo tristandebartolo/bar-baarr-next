@@ -28,6 +28,10 @@ export default auth(async function middleware(req: NextRequest) {
   const isProd = process.env.NODE_ENV === "production";
   const isAuthRoute = pathname.startsWith("/api/auth");
 
+  response.headers.delete('x-powered-by');
+  response.headers.delete('x-nextjs-cache');
+  response.headers.delete('x-middleware-prefetch');
+
   if (isProd && isAuthRoute) {
     // Force les headers UNIQUEMENT pour NextAuth en prod (évite le :3000)
     const publicHost = "next.trstn.fr"; // Ton domaine exact
