@@ -1,0 +1,9 @@
+{
+	"enable": true,
+	"classLength": 2,
+	"preserveDynamic": true,
+	"removeOriginalCss": true,
+	"mapFile": "./.obfuscate-map.json",
+	"obfuscateIdents": true,
+	"buildDir": "./.build"
+}

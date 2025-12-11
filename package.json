@@ -8,7 +8,8 @@
 		"start": "next start",
 		"lint": "eslint",
 		"ndmn": "nodemon",
-		"ndmn-build": "next build && tsc --project tsconfig.server.json",
+		"obfuscate-build": "npx next-css-obfuscator --build",
+		"ndmn-build": "next build && tsc --project tsconfig.server.json && yarn obfuscate-build",
 		"ndmn-start": "cross-env NODE_ENV=production node public/src/server.js"
 	},
 	"dependencies": {
@@ -45,6 +46,7 @@
 		"@types/ws": "^8.18.1",
 		"eslint": "^9",
 		"eslint-config-next": "15.5.4",
+		"next-css-obfuscator": "^3.0.0",
 		"nodemon": "^3.1.10",
 		"prettier": "^3.6.2",
 		"prettier-plugin-tailwindcss": "^0.6.14",
