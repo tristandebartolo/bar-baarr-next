@@ -35,7 +35,7 @@ const nextConfig: NextConfig = {
 		globalNotFound: true,
 		// Next.js 15.5+ accepte cette option en canary/stable fin 2025
 		// @ts-ignore – l’option existe même si TS ne la connaît pas encore
-		bundlePagesExternals: true
+		bundlePagesRouterDependencies: true,
 	},
 	images: {
 		remotePatterns: [
