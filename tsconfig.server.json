@@ -2,10 +2,11 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "public",
-    "lib": ["es2019"],
-    "target": "es2019",
+    "lib": ["es2022"],
+    "target": "es2022",
     "isolatedModules": false,
     "noEmit": false,
-    "module": "CommonJS"
+    "module": "esnext",
+    "moduleResolution": "bundler"
   }
 }
