@@ -4,8 +4,8 @@ const isProd = process.env.NEXT_PUBLIC_DRUPAL_ENV === 'production';
 import ObfuscatorPlugin from 'webpack-obfuscator';
 const nextConfig: NextConfig = {
 	poweredByHeader: false,
-	distDir: isProd ? '.build' : '.next',
-	assetPrefix: isProd ? '/s' : undefined,
+	// distDir: isProd ? '.build' : '.next',
+	// assetPrefix: isProd ? '/s' : undefined,
 	generateBuildId: async () => {
 		return 'build-' + Date.now().toString(36);
 	},
