@@ -49,4 +49,5 @@ next-env.d.ts
 package-lock.json
 yarn.lock
 old.env.prod.txt
-/css-obfuscator
+.tailwind-mangle-map.json
+.tw-patch-classes.json

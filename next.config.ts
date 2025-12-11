@@ -1,6 +1,5 @@
-import type {NextConfig}
-from "next";
-import CssObfuscator from 'next-css-obfuscator';
+import type {NextConfig} from "next";
+import utwm from 'unplugin-tailwindcss-mangle/webpack';
 
 const isProd = process.env.NEXT_PUBLIC_DRUPAL_ENV === 'production';
 const nextConfig: NextConfig = {
@@ -32,10 +31,7 @@ const nextConfig: NextConfig = {
 	},
 	output: "standalone",
 	experimental: {
-		globalNotFound: true,
-		// Next.js 15.5+ accepte cette option en canary/stable fin 2025
-		// @ts-ignore – l’option existe même si TS ne la connaît pas encore
-		bundlePagesRouterDependencies: true,
+		globalNotFound: true
 	},
 	images: {
 		remotePatterns: [
@@ -46,6 +42,21 @@ const nextConfig: NextConfig = {
 				pathname: "/sites/default/files/**"
 			},
 		]
+	},
+	webpack: (config, {isServer, dev}) => {
+		if (isProd && !isServer && !dev) { // On crée une fonction qui accepte n’importe quelle option
+			const addMangle = (options : Record < string, unknown >) => { // @ts-ignore – le plugin accepte ces options en runtime (doc officielle)
+				config.plugins.push(utwm(options));
+			};
+
+			addMangle({
+				classLength: 2,
+				mapFile: './.tailwind-mangle-map.json',
+				dynamic: true,
+				// ignore: ['dark:', 'group-', 'peer-']
+			});
+		}
+		return config;
 	}
 };
 
