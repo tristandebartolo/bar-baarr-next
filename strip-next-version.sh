@@ -3,17 +3,26 @@ set -e
 
 echo "[postbuild] Stripping Next.js version from .next artifacts for security…"
 
+# Get the actual installed Next.js version
 NEXT_VERSION=$(node -p "require('./node_modules/next/package.json').version" 2>/dev/null || echo "")
 
 if [ -z "$NEXT_VERSION" ]; then
-  echo "[postbuild] Warning: Could not detect Next.js version. Skipping."
+  echo "[postbuild] ⚠️ Could not detect Next.js version. Skipping strip step."
   exit 0
 fi
 
-echo "[postbuild] Detected Next.js version: $NEXT_VERSION"
+# Find all files containing the version
+FILES=$(grep -rlF "$NEXT_VERSION" .next || true)
 
-# macOS BSD sed est chiant avec les chemins .next et les fichiers binaires → on utilise Perl à la place
-# Perl est installé nativement sur macOS et gère tout parfaitement
-find .next -type f -print0 2>/dev/null | xargs -0 perl -i -pe "s/\Q$NEXT_VERSION//g" 2>/dev/null || true
+if [ -z "$FILES" ]; then
+  echo "[postbuild] ✅ No occurrences of $NEXT_VERSION found in .next."
+#   exit 0
+fi
 
-echo "[postbuild] Successfully stripped version $NEXT_VERSION from all .next files."
+# Replace version with empty string
+echo "$FILES" | xargs sed -i "s/$NEXT_VERSION//g"
+
+# BUILD_DIR=".next"
+# grep -rl "$NEXT_VERSION" "$BUILD_DIR" | xargs sed -i  "s/$NEXT_VERSION//g"
+
+echo "[postbuild] ✅ Removed Next.js version $NEXT_VERSION from $(echo "$FILES" | wc -l) files."
