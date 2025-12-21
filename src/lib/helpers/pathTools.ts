@@ -11,3 +11,6 @@ export const baseParagraphEmbed = process.env.DRUPAL_LOAD_EMBED;
 
 const dev = process.env.NEXT_PUBLIC_DRUPAL_ENV !== "production";
 export const hostUrlRedirect = dev ? `${process.env.NEXT_PUBLIC_DRUPAL_HOSTNAME_LOCAL}:3000` : process.env.NEXT_PUBLIC_DRUPAL_HOSTNAME_FRONT;
+
+// CF
+export const apiArticle = process.env.DRUPAL_API_ARTICLE;

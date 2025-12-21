@@ -11,7 +11,7 @@ import {
 	baseRs,
 	baseArticleMeta,
 	baseParagraphEmbed,
-	hostUrlRedirect
+	apiArticle
 } from "@/lib/helpers/index";
 import {SdUserType} from "../types";
 
@@ -153,6 +153,7 @@ export async function getDataByAlias(alias : string, session : Session | null, l
 			} = user;
 			if (email) {
 				const basicHash = await decrypt(email);
+				console.log('basicHash', basicHash)
 
 				if (basicHash && basicHash.sd) {
 					const sdf: SdUserType = basicHash.sd || {};
@@ -167,7 +168,56 @@ export async function getDataByAlias(alias : string, session : Session | null, l
 	const pth = `${basePath}${baseArticle}?alias=${alias}&langcode=${langcode}`;
 	const data = await fetch(pth, {
 		headers: {
-			Authorization: `Basic ${baseRsHs}`
+			Authorization: `Basic ${baseRsHs}`,
+		},
+		cache: "no-cache"
+	});
+
+	if (! data.ok) {
+		return null;
+	}
+
+	const post = await data.json();
+	return post;
+}
+
+/**
+ * getDataByAlias()
+ * 
+ * @param alias 
+ * @param session 
+ * @param langcode 
+ * @returns 
+ */
+export async function getDataWithCookie(alias : string, session : Session | null, langcode : string, mode : string = 'alias') {
+	let baseRsHs = baseRs;
+	let sessionCookie = '';
+
+	if (session ?. user) {
+		const userEmain = session.user?.email;
+		if (userEmain) {
+			const basicHash = await decrypt(userEmain);
+			if (basicHash && basicHash.sd) {
+				
+				const sdf: SdUserType = basicHash.sd || {};
+				console.log('basicHash', sdf)
+				if (sdf) {
+					baseRsHs = sdf.csrf_token;
+					sessionCookie = sdf.session_cookie as string;
+				}
+			}
+		}
+	}
+
+  // const theme = cookieStore.get('theme')
+	const pth = `${basePath}${apiArticle}?alias=${alias}&mode=${mode}&langcode=${langcode}`;
+	const data = await fetch(pth, {
+		credentials: 'include',
+		headers: {
+			'X-CSRF-Token': baseRsHs as string,
+			'Cookie': sessionCookie as string,
+			
+			'Accept': 'application/json',
 		},
 		cache: "no-cache"
 	});
@@ -190,10 +240,13 @@ export async function authenticate(
   formData: FormData, // FormData natif
 ) {
   try {
+		const redirectTo = formData.get("redirectTo");
+		// Conversion sécurisée en string (car c'est un champ texte caché)
+		const redirectPath = typeof redirectTo === "string" ? redirectTo : "/fr";
     await signIn("credentials", {
       username: formData.get("username"),
       password: formData.get("password"),
-	  redirectTo: '/fr'
+	  	redirectTo: redirectPath,
     });
   } catch (error) {
     if (error instanceof AuthError) {
