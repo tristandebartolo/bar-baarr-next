@@ -1,5 +1,5 @@
 "use client";
-// Import Lib
+// Lib
 import {
   useActionState,
   useState,
@@ -8,18 +8,18 @@ import {
   useCallback,
   useRef,
 } from "react";
+import { usePathname } from "next/navigation";
+// Actions
 import { authenticate } from "@/lib/action";
-import { useSearchParams } from "next/navigation";
-
+// Style
 import style from "@/components/Auth/AuthForm.module.css";
-// type FormDataSignType = {
-//   [key: string]: string | null;
-// };
-
+// Component
 export default function AuthForm() {
   // Url Parameters
-  const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl") || "/fr";
+  const pathname = usePathname();
+  // Détermine où rediriger après login
+  const redirectTo = pathname === "/fr/club" ? "/fr" : pathname;
+  console.log('redirectTo', redirectTo)
 
   // Verify
   const verifyRef = useRef<HTMLInputElement | null>(null);
@@ -86,7 +86,6 @@ export default function AuthForm() {
       className="w-1/1 max-w-md space-y-3 sm:w-1/2"
     >
       <div className="flex-1 rounded-lg px-6 pt-8 pb-4">
-        <h1 className={`font-cinderela text-one mb-3 text-7xl`}>Club</h1>
         <div className="w-full">
           <div>
             <div className={style.nameForm}>
@@ -107,7 +106,7 @@ export default function AuthForm() {
               </div>
             </div>
             <div className="relative">
-              <span className="i-gntl--person absolute top-4 left-3"></span>
+              <span className="icon-gm--person absolute top-4 left-3"></span>
               <input
                 className="border-one mb-3 block w-full border-b-4 py-3 pl-10 outline-0 dark:placeholder:text-gray-400"
                 id="username"
@@ -124,7 +123,7 @@ export default function AuthForm() {
           </div>
 
           <div className="relative">
-            <span className="i-gntl--vpn_key absolute top-4 left-3"></span>
+            <span className="icon-gm-vpn_key absolute top-4 left-3"></span>
             <input
               className="border-one mb-3 block w-full border-b-4 py-3 pl-10 outline-0"
               id="password"
@@ -140,7 +139,7 @@ export default function AuthForm() {
             />
           </div>
         </div>
-        <input type="hidden" name="redirectTo" value={callbackUrl} />
+        <input type="hidden" name="redirectTo" value={redirectTo} />
         {username && username.length > 3 && (
           <button
             className="mb-3 block w-full cursor-pointer p-3 text-right outline-0 focus-within:font-bold"

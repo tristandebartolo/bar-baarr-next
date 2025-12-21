@@ -1,13 +1,52 @@
 import { DefaultSession } from "next-auth";
-// import { DefaultJWT } from "next-auth/jwt";
+
+// declare module "next-auth" {
+//   interface Session extends DefaultSession {
+//     user: {
+//       id: string;
+//       firstName?: string | null;
+//       lastName?: string | null;
+//       name: string;
+//       roles?: string[] | null;
+//     } & DefaultSession["user"];
+//   }
+// }
 
 declare module "next-auth" {
-  interface Session extends DefaultSession {
+  /**
+   * Étend le type User intégré
+   */
+  interface User {
+    id: string;
+    firstName?: string | null;
+    lastName?: string | null;
+    roles?: string[] | null;
+  }
+
+  /**
+   * Étend la session pour que session.user ait tes propriétés
+   */
+  interface Session {
     user: {
-      id: string | number | null;
-      firstName?: string | null;
-      lastName?: string | null;
+      id: string;
       name: string | null;
-    } & DefaultSession["user"];
+      email: string | null;
+      image: string | null;
+      firstName: string | null;
+      lastName: string| null;
+      roles: string[] | null;
+    };
+  }
+}
+
+
+declare module "next-auth/jwt" {
+  /**
+   * Étend le token JWT
+   */
+  interface JWT {
+    firstName?: string | null;
+    lastName?: string | null;
+    roles?: string[] | null;
   }
 }
