@@ -3,11 +3,10 @@ import {JWT} from 'next-auth/jwt'
 
 export type SdUserType = {
 	hash?: string;
-	uid?: string | number;
 	csrf_token?: string;
 	logout_token?: string;
+  session_cookie?: string;
 };
-
 
 export type CallbackSessionType = {
 	session: Session;
