@@ -8,17 +8,14 @@ import NavbarLocal from "@/components/Navbar/NavbarLocal/NavbarLocal";
 // Types
 import { MenuLinksDisplayType, SessionUser } from "@/lib/types";
 import { LinksetInterface } from "@drupal/linkset/dist/spec/linkset-json";
+import Link from "next/link";
 type MenuComposentProps = {
   menuSecondary: LinksetInterface;
   menuDisplay: MenuLinksDisplayType[];
   sessionUser?: SessionUser;
 };
 // NavbarContent
-const NavbarContent = ({
-  menuSecondary,
-  menuDisplay,
-  sessionUser,
-}: MenuComposentProps) => (
+const NavbarContent = ({ menuSecondary, menuDisplay, sessionUser }: MenuComposentProps) => (
   <div className="container mx-auto px-5 2xl:max-w-[--container]">
     <div className="flex h-16 items-center justify-between">
       <MenuDrupal menu={menuSecondary} display={menuDisplay} />
@@ -30,11 +27,7 @@ const NavbarContent = ({
   </div>
 );
 // NavbarClient
-export default function NavbarClient({
-  menuSecondary,
-  menuDisplay,
-  sessionUser,
-}: MenuComposentProps) {
+export default function NavbarClient({ menuSecondary, menuDisplay, sessionUser }: MenuComposentProps) {
   const fixedNavbarRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -48,8 +41,7 @@ export default function NavbarClient({
       const triggerPoint = 180; // hauteur de ton header + navbar (ajuste si besoin)
 
       if (current > triggerPoint) {
-        fixed.style.transform =
-          current < prevScroll ? "translateY(0)" : "translateY(-100%)";
+        fixed.style.transform = current < prevScroll ? "translateY(0)" : "translateY(-100%)";
       } else {
         fixed.style.transform = "translateY(-100%)";
       }
@@ -66,11 +58,14 @@ export default function NavbarClient({
     <>
       {/* NAVBAR RELATIVE — prend sa place naturellement */}
       <div className="relative z-10 border-b border-gray-200/50 bg-white/90 backdrop-blur-lg dark:border-gray-800 dark:bg-gray-950/90">
-        <NavbarContent
-          menuSecondary={menuSecondary}
-          menuDisplay={menuDisplay}
-          sessionUser={sessionUser}
-        />
+        <NavbarContent menuSecondary={menuSecondary} menuDisplay={menuDisplay} sessionUser={sessionUser} />
+        <ul>
+          <li>
+            <a href={`/fr#cookies-preferences`}>
+              <span className="icon-gm-cookies text-xl"></span>
+            </a>
+          </li>
+        </ul>
       </div>
 
       {/* NAVBAR FIXED — apparaît seulement quand on scroll up après la relative */}
@@ -82,11 +77,7 @@ export default function NavbarClient({
           transition: "transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
         }}
       >
-        <NavbarContent
-          menuSecondary={menuSecondary}
-          menuDisplay={menuDisplay}
-          sessionUser={sessionUser}
-        />
+        <NavbarContent menuSecondary={menuSecondary} menuDisplay={menuDisplay} sessionUser={sessionUser} />
       </div>
     </>
   );

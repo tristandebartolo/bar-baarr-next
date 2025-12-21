@@ -47,7 +47,7 @@ async function NavbarTheme() {
         />
         <button className="cursor-pointer">
           <span
-            className={`i-gntl--${
+            className={`icon-gm-${
               currentTheme === "light" ? "wb_sunny" : "bedtime"
             }`}
           ></span>

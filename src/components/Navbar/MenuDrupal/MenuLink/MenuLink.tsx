@@ -48,8 +48,8 @@ export function MenuLink({
         onClick={hdlOpen}
       >
         {attributes.title}
-        {hasChild && isOpen && <span className="i-gntl--expand_less ml-2"></span>}
-        {hasChild && !isOpen && <span className="i-gntl--expand_more ml-2"></span>}
+        {hasChild && isOpen && <span className="icon-gm-expand_less ml-2"></span>}
+        {hasChild && !isOpen && <span className="icon-gm-expand_more ml-2"></span>}
       </button>
     </>
   );

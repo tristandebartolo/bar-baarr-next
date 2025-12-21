@@ -46,13 +46,12 @@ export function NavbarUser({ sessionUser }: { sessionUser?: SessionUser}) {
             <li>
               <Link href={`/`}>
                 <span className="cxdx cxdx-user"></span>
-
                 {user && <div>{user.name}</div>}
               </Link>
             </li>
             <li>
               <button onClick={() => signOut({ callbackUrl: '/fr', redirect: true })} type="button">
-                <span className="i-gntl--power_settings_new"></span>
+                <span className="icon-gm-power_settings_new"></span>
                 <span className="visually-hidden">Déconnexion</span>
               </button>
             </li>
@@ -62,7 +61,7 @@ export function NavbarUser({ sessionUser }: { sessionUser?: SessionUser}) {
           <>
             <li>
               <Link href={`/${params.locale}/club`}>
-                <span className="i-gntl--person"></span>
+                <span className="icon-gm-person"></span>
                 Se connecter
               </Link>
             </li>
