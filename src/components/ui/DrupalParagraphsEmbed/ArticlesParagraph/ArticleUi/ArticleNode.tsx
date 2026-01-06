@@ -9,7 +9,7 @@ import { PageType, ArticleType, ItemsArticlesParagraphProps } from "@/lib/types/
 import { formatDate } from "@/lib/helpers/utilsTools";
 // Composents
 import ArticlePlaceholder from "@/components/ui/Placeholders/ArticlePlaceholder";
-import ArticleTitle from "@/components/ui/DrupalParagraphsEmbed/ArticlesWrapperParagraph/ArticleUi/ArticleTitle";
+import ArticleTitle from "@/components/ui/DrupalParagraphsEmbed/ArticlesParagraph/ArticleUi/ArticleTitle";
 import ArticleChapo from "./ArticleChapo";
 // Components propstype
 export type ArticlePropsType = {
