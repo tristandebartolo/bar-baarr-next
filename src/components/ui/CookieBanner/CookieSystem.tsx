@@ -25,6 +25,24 @@ export default function CookieSystem() {
     // Abonnement
     const unsubscribe = cookieConsent.subscribe(update);
 
+    // === NOUVEAU : Détection de l'URL pour ouvrir la modale ===
+    if (typeof window !== "undefined") {
+      const url = new URL(window.location.href);
+      console.log('url', url)
+      // Option 1 : hash #cookies
+      const shouldOpenFromHash = url.hash === "#cookies" || url.hash === "#cookies-preferences";
+
+      if (shouldOpenFromHash) {
+        setShowModal(true);
+        // Optionnel : nettoyer l'URL après ouverture (sans recharger la page)
+        // Pour une URL propre après ouverture
+        if (shouldOpenFromHash) {
+          // Supprime le hash sans recharger
+          history.replaceState(null, "", window.location.pathname + window.location.search);
+        }
+      }
+    }
+
     // Nettoyage
     return () => {
       unsubscribe();

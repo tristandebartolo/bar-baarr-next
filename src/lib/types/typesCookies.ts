@@ -4,7 +4,6 @@ export type VideoProvider =
   | "vimeo"
   | "dailymotion"
   | "archive"
-  | "rts"
   | "ina"
   | "x";
 
@@ -17,7 +16,6 @@ export const VIDEO_PROVIDERS: Record<VideoProvider, { name: string, description?
   vimeo: { name: "Vimeo", description: "Autoriser les vidéos" },
   dailymotion: { name: "Dailymotion", description: "Autoriser les vidéos" },
   archive: { name: "Archive.org", description: "Autoriser les vidéos" },
-  rts: { name: "RTS", description: "Autoriser les vidéos" },
   ina: { name: "INA", description: "Autoriser les vidéos" },
   x: { name: "X", description: "Autoriser les posts" },
 };

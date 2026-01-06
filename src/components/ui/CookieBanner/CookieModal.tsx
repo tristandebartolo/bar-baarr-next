@@ -40,7 +40,7 @@ export default function CookieModal({ onClose }: { onClose: () => void }) {
           {/* Contenus embarqués */}
           <div className="space-y-3">
             <h3 className="text-xl font-semibold">Contenus embarqués</h3>
-            {providers.map(([key, { name }]) => {
+            {providers.map(([key, { name, description }]) => {
               const id = `video_${key}`;
               const isOn = cookieConsent.isAccepted(id);
 
@@ -51,7 +51,7 @@ export default function CookieModal({ onClose }: { onClose: () => void }) {
                 >
                   <div>
                     <div className="font-medium text-lg">{name}</div>
-                    <p className="text-sm text-gray-600">Autoriser les vidéos {name}</p>
+                    <p className="text-sm text-gray-600">{description} {name}</p>
                   </div>
 
                   {/* SWITCH */}
