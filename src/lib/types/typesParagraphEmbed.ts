@@ -265,7 +265,7 @@ export interface GalerieParagraphDataProps extends ParagraphProps {
 	field_hn: HnType;
 	field_show_title: boolean;
 	field_mode: "grid" | "slideshow" | "normal" | "slider";
-	field_mode_grid?: ColonnesTypes;
+	field_mode_grid: ColonnesTypes;
 	field_mode_grid_md?: ColonnesTypes;
 	field_style_vignette: string;
 	field_lightbox: boolean;

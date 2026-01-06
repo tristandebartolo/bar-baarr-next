@@ -65,7 +65,9 @@ export default function GalerieParagraph({ node }: {node: GalerieParagraphDataPr
     "2": "g-cols g-cols-2",
     "3": "g-cols g-cols-3",
     "4": "g-cols g-cols-4",
-  }[node.field_mode_grid];
+    "5": "g-cols g-cols-3",
+    "6": "g-cols g-cols-4",
+  }[node.field_mode_grid] || 'g-cols g-cols-1';
 
   return (
     <div className="my-12">
