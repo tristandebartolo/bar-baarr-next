@@ -29,6 +29,7 @@ export async function GET(req: NextRequest) {
     const filePath = getFilePath(section, lang);
     const content = await readFile(filePath, "utf-8");
     return NextResponse.json(JSON.parse(content));
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (e) {
     return NextResponse.json({}, { status: 200 });
   }
@@ -56,6 +57,7 @@ export async function POST(req: NextRequest) {
   try {
     const content = await readFile(filePath, "utf-8");
     data = JSON.parse(content);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (e) {
     data = {};
   }
@@ -87,6 +89,7 @@ export async function DELETE(req: NextRequest) {
         delete data[key];
         await writeFile(filePath, JSON.stringify(data, null, 2) + "\n");
       }
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (e) {
       // Ignore si fichier ou clé n'existe pas
     }

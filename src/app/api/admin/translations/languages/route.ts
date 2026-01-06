@@ -1,7 +1,7 @@
 // src/app/api/admin/translations/languages/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import { join } from "path";
-import { readdir, readFile, writeFile, mkdir } from "fs/promises";
+import { readdir, readFile, writeFile } from "fs/promises";
 import { requireAdmin } from "@/lib/auth/adminCheck";
 
 const languagesFile = join(process.cwd(), "src", "translations", "_languages.json");
@@ -13,6 +13,7 @@ export async function GET() {
     const content = await readFile(languagesFile, "utf-8");
     const langs = JSON.parse(content);
     return NextResponse.json({ languages: langs });
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (e) {
     return NextResponse.json({ languages: ["fr", "en"] });
   }
@@ -31,6 +32,7 @@ export async function POST(req: NextRequest) {
   try {
     const content = await readFile(languagesFile, "utf-8");
     languages = JSON.parse(content);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (e) {}
 
   if (languages.includes(code)) {
@@ -50,6 +52,7 @@ export async function POST(req: NextRequest) {
     try {
       const content = await readFile(frPath, "utf-8");
       frData = JSON.parse(content);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (e) {}
 
     const newPath = join(translationsDir, folder, `${code}.json`);
@@ -62,6 +65,7 @@ export async function POST(req: NextRequest) {
   try {
     const content = await readFile(rootFrPath, "utf-8");
     rootFrData = JSON.parse(content);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (e) {}
 
   await writeFile(join(translationsDir, `${code}.json`), JSON.stringify(rootFrData, null, 2));

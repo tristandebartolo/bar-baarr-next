@@ -66,6 +66,7 @@ export default function Xembed({
           // if (!iframe) return;
 
           // Solution 1 : écouter l'événement global de Twitter "tweet-loaded"
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const onTweetLoaded = (event: any) => {
             if (event.data && event.data["tweet-loaded"]) {
               hideLoader();

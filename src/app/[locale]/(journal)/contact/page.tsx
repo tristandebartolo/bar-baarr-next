@@ -1,13 +1,13 @@
 import PanoramicBanner from "@/components/ui/PanoramicViewer/PanoramicBanner";
 import PanoramicLightbox from "@/components/ui/PanoramicViewer/PanoramicLightbox";
-import PanoramicViewer from "@/components/ui/PanoramicViewer/PanoramicViewer";
+// import PanoramicViewer from "@/components/ui/PanoramicViewer/PanoramicViewer";
 
 export default function Page() {
   return (
     <>
       {/* Panorama dynamique */}
-
-      {/* <PanoramicViewer
+{/* 
+      <PanoramicViewer
         imageSrc="https://yamn.baarr.fr/sites/default/files/mediatheque/images/2025-12/uv-villa-web.jpg"
         imageAlt="Superbe panorama"
         heightPercentage={100} // optionnel
@@ -21,14 +21,14 @@ export default function Page() {
         thumbnailHeight="60vh"
         /> */}
 
-      {/* <PanoramicBanner
+      <PanoramicBanner
         imageSrc="https://yamn.baarr.fr/sites/default/files/mediatheque/images/2025-12/uv-villa-web.jpg"
         alt="Exploration panoramique"
         height="50vh" // ou "75vh", "50vh", "25vh"
         initialCenterX={5800} // centre sur le pixel 2500 en X
         initialCenterY={300}
         showMiniMap={true}
-      /> */}
+      />
 
       <PanoramicLightbox
         thumbnailSrc="https://yamn.baarr.fr/sites/default/files/mediatheque/images/2025-12/uv-villa-web.jpg"
