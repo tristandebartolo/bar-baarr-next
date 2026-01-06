@@ -1,10 +1,10 @@
 // components/paragraphs/ArticlesParagraph.tsx
 "use client";
 
-import { ArticlesParagraphProps } from "@/lib/types/typesParagraphEmbed";
+import { ArticlesParagraphDataProps } from "@/lib/types/typesParagraphEmbed";
 import { useState, useEffect, JSX } from "react";
 
-export default function ArticlesParagraph({ node }: ArticlesParagraphProps) {
+export default function ArticlesParagraph({ node }: {node: ArticlesParagraphDataProps}) {
   const [isLoading, setIsLoading] = useState(true);
   const TitleTag = node.field_hn as keyof JSX.IntrinsicElements;
 
@@ -12,7 +12,7 @@ export default function ArticlesParagraph({ node }: ArticlesParagraphProps) {
     // Simule un chargement
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 1000); // 1 seconde de chargement
+    }, 1000);
     return () => clearTimeout(timer);
   }, []);
 
@@ -66,6 +66,9 @@ export default function ArticlesParagraph({ node }: ArticlesParagraphProps) {
   const modeDisplayClass =
     {
       card: "flex flex-col",
+      card_only: "flex flex-col",
+      list: "flex flex-col",
+      overlay: "flex flex-col",
       card_left: "flex flex-col md:flex-row",
       card_right: "flex flex-col md:flex-row-reverse",
       tiny: "flex flex-col",
@@ -74,7 +77,7 @@ export default function ArticlesParagraph({ node }: ArticlesParagraphProps) {
     }[node.field_mode_display] || "flex flex-col";
 
   return (
-    <div className={`my-12 prgh-${node?.bundle || "prgh"}`}>
+    <div className={`my-12 prgh-${node?.entity_bundle || "prgh"}`}>
       <div className={`mx-auto max-w-3xl ${node.field_alignement}`}>
         {node.field_show_title && node.field_title && (
           <TitleTag className={`mb-3 font-bold`}>{node.field_title}</TitleTag>
@@ -90,8 +93,8 @@ export default function ArticlesParagraph({ node }: ArticlesParagraphProps) {
               return (
                 <div
                   key={article.nid}
-                  className={`group ${modeDisplayClass} cursor-pointer flex-col border border-gray-200 dark:border-gray-800 transition-all duration-200 ease-in-out`}
-                  onClick={() => (window.location.href = articleLink)}
+                  className={`group ${modeDisplayClass} flex-col border border-gray-200 dark:border-gray-800 transition-all duration-200 ease-in-out`}
+                  // onClick={() => (window.location.href = articleLink)}  cursor-pointer
                 >
                   {imageUrl && (
                     <div
@@ -136,7 +139,7 @@ export default function ArticlesParagraph({ node }: ArticlesParagraphProps) {
                               className="block p-4 transition duration-150 ease-in-out hover:bg-gray-100 dark:hover:bg-neutral-900"
                               href={articleLink}
                             >
-                              <span className="i-gntl--article"></span>
+                              <span className="icon-gm-article"></span>
                               <span className="hidden md:flex">
                                 Lire l&apos;article
                               </span>
@@ -152,7 +155,7 @@ export default function ArticlesParagraph({ node }: ArticlesParagraphProps) {
                               className="block p-4 transition duration-150 ease-in-out hover:bg-gray-100 dark:hover:bg-neutral-900"
                               href={"#"}
                             >
-                              <span className="i-gntl--favorite"></span>
+                              <span className="icon-gm-favorite"></span>
                             </a>
                           </li>
                         </ul>

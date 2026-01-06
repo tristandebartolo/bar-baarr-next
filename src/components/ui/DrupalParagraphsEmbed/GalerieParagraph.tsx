@@ -7,9 +7,9 @@ import UIkit from "uikit";
 import "./GalerieParagraph.scss";
 import "./uikitStyle.scss";
 import CustomLightbox from "../CustomLightbox/CustomLightbox";
-import { GalerieParagraphProps } from "@/lib/types/typesParagraphEmbed";
+import { GalerieParagraphDataProps } from "@/lib/types/typesParagraphEmbed";
 
-export default function GalerieParagraph({ node }: GalerieParagraphProps) {
+export default function GalerieParagraph({ node }: {node: GalerieParagraphDataProps}) {
   const slideshowRef = useRef<HTMLDivElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
 

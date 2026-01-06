@@ -1,12 +1,10 @@
 // components/paragraphs/MessageParagraph.tsx
 "use client";
 
-import { MessageParagraphProps } from "@/lib/types/typesParagraphEmbed";
+import { MessageParagraphDataProps } from "@/lib/types/typesParagraphEmbed";
 import { useState, useEffect, JSX } from "react";
 
-export default function MessageParagraph({
-  node
-}: MessageParagraphProps) {
+export default function MessageParagraph({ node }: { node: MessageParagraphDataProps }) {
   const [isLoading, setIsLoading] = useState(true);
   const TitleTag = node.field_hn as keyof JSX.IntrinsicElements;
 
@@ -32,22 +30,9 @@ export default function MessageParagraph({
   if (isLoading) {
     return (
       <div className={`my-12`}>
-        <div
-          className={`mx-auto flex h-64 max-w-3xl items-center justify-center ${statusStyles[node.field_status_msg]} rounded-lg`}
-        >
-          <svg
-            className="h-12 w-12 animate-spin text-gray-500"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <circle
-              className="opacity-25"
-              cx="12"
-              cy="12"
-              r="10"
-              stroke="currentColor"
-              strokeWidth="4"
-            />
+        <div className={`mx-auto flex h-64 max-w-3xl items-center justify-center ${statusStyles[node.field_status_msg]} rounded-lg`}>
+          <svg className="h-12 w-12 animate-spin text-gray-500" fill="none" viewBox="0 0 24 24">
+            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
             <path
               className="opacity-75"
               fill="currentColor"
@@ -61,18 +46,9 @@ export default function MessageParagraph({
 
   return (
     <div className={`my-12`}>
-      <div
-        className={`mx-auto max-w-3xl ${statusStyles[node.field_status_msg]} rounded-lg p-6`}
-      >
-        {node.field_show_title && node.field_title && (
-          <TitleTag className={`mb-6 font-bold text-xl`}>
-            {node.field_title}
-          </TitleTag>
-        )}
-        <div
-          className={`prose text-sm`}
-          dangerouslySetInnerHTML={{ __html: node.field_text }}
-        />
+      <div className={`mx-auto max-w-3xl ${statusStyles[node.field_status_msg]} rounded-lg p-6`}>
+        {node.field_show_title && node.field_title && <TitleTag className={`mb-6 text-xl font-bold`}>{node.field_title}</TitleTag>}
+        <div className={`prose text-sm`} dangerouslySetInnerHTML={{ __html: node.field_text }} />
       </div>
     </div>
   );
