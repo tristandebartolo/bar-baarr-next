@@ -1,18 +1,7 @@
-// src/app/admin/translations/TranslationManager.tsx
 "use client";
-
+// Libs
 import { useState, useEffect, useRef } from "react";
-import {
-  Folder,
-  FileText,
-  Plus,
-  Trash2,
-  RotateCcw,
-  Check,
-  PencilLine,
-} from "lucide-react";
 import { useToast } from "@/lib/helpers/toastContext";
-
 
 type Translations = Record<string, string>;
 const itemsPerPage = 30;
@@ -394,9 +383,9 @@ export default function TranslationManager({ section }: { section: string }) {
                         }`}
                       >
                         {savingStatus[`${selectedLang}-${key}`] === "saving" ? (
-                          <PencilLine className="h-4 w-4" />
+                         <span className="icon-gm-create"></span>
                         ) : (
-                          <Check className="h-4 w-4" />
+                          <span className="icon-gm-check"></span>
                         )}
                       </span>
                     )}
@@ -409,13 +398,13 @@ export default function TranslationManager({ section }: { section: string }) {
                             onClick={cancelDelete}
                             className="rounded bg-gray-200 px-3 py-1 text-sm font-medium text-gray-700 hover:bg-gray-300"
                           >
-                            <RotateCcw className="h-4 w-4" />
+                            <span className="icon-gm-arrow_back"></span>
                           </button>
                           <button
                             onClick={confirmDelete}
                             className="rounded bg-red-600 px-3 py-1 text-sm font-medium text-white hover:bg-red-700"
                           >
-                            <Trash2 className="h-4 w-4" />
+                            <span className="icon-gm-delete"></span>
                           </button>
                         </div>
                       ) : (
@@ -423,7 +412,7 @@ export default function TranslationManager({ section }: { section: string }) {
                           onClick={() => startDelete(key)}
                           className="text-sm font-medium text-red-600 hover:text-red-800"
                         >
-                          <Trash2 className="h-4 w-4" />
+                          <span className="icon-gm-delete"></span>
                         </button>
                       )}
                     </td>

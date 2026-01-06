@@ -4,11 +4,8 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Folder, FileText, Plus, Trash2, RotateCcw } from "lucide-react";
 
-const defaultFolders = [
-  { name: "Racine", path: "", icon: FileText },
-];
+const defaultFolders = [{ name: "/", path: "", icon: "icon-gm-container" }];
 
 export default function Sidebar() {
   const pathname = usePathname();
@@ -73,47 +70,49 @@ export default function Sidebar() {
     ...sections.map((sec) => ({
       name: sec.charAt(0).toUpperCase() + sec.slice(1),
       path: sec,
-      icon: Folder,
+      icon: "icon-gm-split-vertical",
     })),
   ];
 
   return (
-    <aside className="w-64 bg-white border-r border-gray-200 h-full flex flex-col">
-      <div className="p-6 flex-1 overflow-y-auto">
-        <h2 className="text-xl font-bold mb-8 text-gray-900">Traductions</h2>
-
+    <aside className="flex h-full w-64 flex-col border-r border-gray-200 bg-white">
+      <div className="flex-1 overflow-y-auto p-6">
+        <h2 className="mb-8 text-xl font-bold text-gray-900">Traductions</h2>
         {/* Affichage de la section courante + bouton suppression */}
         {currentSection && (
-          <div className="mb-6 p-4 bg-gray-50 rounded-lg">
+          <div className="mb-6 rounded-lg bg-gray-50 p-4">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-600">Section active</p>
-                <p className="font-semibold text-gray-900">
-                  {currentSection.charAt(0).toUpperCase() + currentSection.slice(1)}
-                </p>
+                <p className="font-semibold text-gray-900">{currentSection.charAt(0).toUpperCase() + currentSection.slice(1)}</p>
               </div>
-              {deletingSection ? (
-                <div className="flex items-center gap-2">
-                  <button
-                    onClick={() => setDeletingSection(false)}
-                    className="px-3 py-1 text-sm bg-gray-200 text-gray-700 rounded hover:bg-gray-300"
-                  >
-                    <RotateCcw className="w-4 h-4" />
-                  </button>
-                  <button
-                    onClick={handleDeleteSection}
-                    className="px-3 py-1 text-sm bg-red-600 text-white rounded hover:bg-red-700 flex items-center gap-1"
-                  >
-                    <Trash2 className="w-4 h-4" />
-                  </button>
-                </div>
-              ) : (
-                <button
-                  onClick={() => setDeletingSection(true)}
-                  className="text-red-600 hover:text-red-800 text-sm font-medium flex items-center gap-1"
-                >
-                  <Trash2 className="w-4 h-4" />
-                </button>
+
+              {currentSection !== "translations" && (
+                <>
+                  {deletingSection ? (
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={() => setDeletingSection(false)}
+                        className="rounded bg-gray-200 px-3 py-1 text-sm text-gray-700 hover:bg-gray-300"
+                      >
+                        <span className="icon-gm-arrow_back"></span>
+                      </button>
+                      <button
+                        onClick={handleDeleteSection}
+                        className="flex items-center gap-1 rounded bg-red-600 px-3 py-1 text-sm text-white hover:bg-red-700"
+                      >
+                        <span className="icon-gm-delete"></span>
+                      </button>
+                    </div>
+                  ) : (
+                    <button
+                      onClick={() => setDeletingSection(true)}
+                      className="flex items-center gap-1 text-sm font-medium text-red-600 hover:text-red-800"
+                    >
+                      <span className="icon-gm-delete"></span>
+                    </button>
+                  )}
+                </>
               )}
             </div>
           </div>
@@ -128,15 +127,11 @@ export default function Sidebar() {
               <Link
                 key={folder.path}
                 href={`/fr/admin/translations/${folder.path}`}
-                className={`
-                  flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200
-                  ${isActive
-                    ? "bg-blue-50 text-blue-700 font-medium"
-                    : "text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-                  }
-                `}
+                className={`flex items-center gap-3 rounded-lg px-4 py-3 transition-all duration-200 ${
+                  isActive ? "bg-blue-50 font-medium text-blue-700" : "text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                } `}
               >
-                <Icon className="w-5 h-5" />
+                <span className={`h-5 w-5 ${Icon}`} />
                 <span>{folder.name}</span>
               </Link>
             );
@@ -145,7 +140,7 @@ export default function Sidebar() {
       </div>
 
       {/* Création nouvelle section */}
-      <div className="p-6 border-t border-gray-200">
+      <div className="border-t border-gray-200 p-6">
         {isCreating ? (
           <div className="space-y-3">
             <input
@@ -153,14 +148,11 @@ export default function Sidebar() {
               value={newSectionName}
               onChange={(e) => setNewSectionName(e.target.value)}
               placeholder="Nom de la section (ex: footer)"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
               autoFocus
             />
             <div className="flex gap-2">
-              <button
-                onClick={handleCreateSection}
-                className="flex-1 bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 text-sm font-medium"
-              >
+              <button onClick={handleCreateSection} className="flex-1 rounded-md bg-blue-600 py-2 text-sm font-medium text-white hover:bg-blue-700">
                 Créer
               </button>
               <button
@@ -168,18 +160,18 @@ export default function Sidebar() {
                   setIsCreating(false);
                   setNewSectionName("");
                 }}
-                className="flex-1 bg-gray-200 text-gray-700 py-2 rounded-md hover:bg-gray-300 text-sm font-medium"
+                className="flex-1 rounded-md bg-gray-200 py-2 text-sm font-medium text-gray-700 hover:bg-gray-300"
               >
-                  <RotateCcw className="w-4 h-4" />
+                <span className="icon-gm-arrow_back"></span>
               </button>
             </div>
           </div>
         ) : (
           <button
             onClick={() => setIsCreating(true)}
-            className="w-full flex items-center justify-center gap-2 bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 transition font-medium"
+            className="flex w-full items-center justify-center gap-2 rounded-lg bg-green-600 py-3 font-medium text-white transition hover:bg-green-700"
           >
-            <Plus className="w-5 h-5" />
+            <span className="icon-gm-add"></span>
             Nouvelle section
           </button>
         )}
