@@ -7,7 +7,7 @@ import "./SlideshowWrapper.scss";
 // Types
 import { ItemsArticlesParagraphProps } from "@/lib/types/typesParagraphEmbed";
 // Composent
-export default function SlideshowWrapper({ node }: { node: ItemsArticlesParagraphProps }) {
+export default function SlideshowWrapper({ node, pembed }: { node: ItemsArticlesParagraphProps, pembed: boolean }) {
   const slideshowRef = useRef<HTMLDivElement>(null);
   const TitleTag = node.field_hn as keyof JSX.IntrinsicElements;
 

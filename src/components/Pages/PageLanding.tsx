@@ -92,7 +92,7 @@ function PageLanding({ node, locale }: { node: HomeNode; locale: string }) {
                   const rAttributesWrapper = {};
                   Object.assign(rAttributesWrapper, {});
 
-                  let wrapperAttri: attriRegion = {
+                  const wrapperAttri: attriRegion = {
                     className: `w-full flex flex-col justify-${layout_justify_horizontal}`,
                   };
 

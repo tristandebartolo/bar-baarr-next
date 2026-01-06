@@ -173,6 +173,7 @@ export default function GsapLightbox({ items, initialIndex, onClose }: GsapLight
     };
     window.addEventListener("keydown", handleKey);
     return () => window.removeEventListener("keydown", handleKey);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [onClose]);
 
   return (

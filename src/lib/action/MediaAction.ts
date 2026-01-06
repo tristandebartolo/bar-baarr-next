@@ -153,7 +153,7 @@ export async function getDataByAlias(alias : string, session : Session | null, l
 			} = user;
 			if (email) {
 				const basicHash = await decrypt(email);
-				console.log('basicHash', basicHash)
+				// console.log('basicHash', basicHash)
 
 				if (basicHash && basicHash.sd) {
 					const sdf: SdUserType = basicHash.sd || {};

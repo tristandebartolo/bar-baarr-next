@@ -9,7 +9,7 @@ import ArticleTitle from "@/components/ui/DrupalParagraphsEmbed/ArticlesParagrap
 import BlockTitle from "@/components/ui/DrupalParagraphsEmbed/ArticlesParagraph/ArticleUi/BlockTitle";
 import ArticleNode from "./ArticleUi/ArticleNode";
 // Composent
-export default function GridWrapper({ node }: { node: ItemsArticlesParagraphProps }) {
+export default function GridWrapper({ node, pembed }: { node: ItemsArticlesParagraphProps, pembed: boolean }) {
 
   const gridRef = useRef<HTMLDivElement>(null);
 
@@ -27,12 +27,12 @@ export default function GridWrapper({ node }: { node: ItemsArticlesParagraphProp
   const overlayDisplay = ["overlay", "overlay_list"];
   const numberColumns = node?.field_mode_grid || "2";
   const numberColumnsMd = node?.field_mode_grid_md || "2";
-  const hnSize = node?.field_font_size || "2xl";
-  const gapColumns = node?.field_gap || "2";
+  // const hnSize = node?.field_font_size || "2xl";
+  // const gapColumns = node?.field_gap || "2";
   const modeDisplay = node?.field_mode_display || "card_left";
 
   return (
-    <div className="mx-auto flex w-full flex-col">
+    <div className={`mx-auto flex w-full flex-col card-${pembed ? 'page' : 'emb'}`}>
       <BlockTitle container={node} classTitle={"title-block"} />
       <div
         ref={gridRef}

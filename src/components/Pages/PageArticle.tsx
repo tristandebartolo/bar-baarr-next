@@ -10,20 +10,9 @@ import VideoWithConsent from "../ui/VideoEmbed/VideoWithConsent";
 import DrupalEntities from "../ui/DrupalEntities/DrupalEntities";
 import ArticleAuthors from "../ui/Article/ArticleAuthors";
 // Styles
-import styles from "./PageArticle.module.css";
 import { JournalSommaireSnippet } from "../ui/JournalSommaire/JournalSommaireSnippet";
 import AuthForm from "../Auth/AuthForm";
 import { formatDate } from "@/lib/helpers/utilsTools";
-
-// Cette fonction marche maintenant en français côté serveur !
-// const formatDate = (dateString: string, locale: string) => {
-//   return new Intl.DateTimeFormat(locale, {
-//     day: "numeric",
-//     month: "long",
-//     year: "numeric",
-//     timeZone: "Europe/Paris",
-//   }).format(new Date(dateString));
-// };
 
 const getRemainingReadingPercentage = (totalMinutes: number, previewMinutes: number): string => {
   // Sécurité : éviter division par zéro ou valeurs négatives
@@ -53,14 +42,14 @@ export function PageArticle({ node, locale, theme }: { node: JournalNode; locale
   const timeOfReadPrview = node?.count_text_preview || 0.5;
   const isPublic = node?.ccs || null;
   const timeOfReadRest = getRemainingReadingPercentage(timeOfRead, timeOfReadPrview);
-  const collectionData = node?.field_collection || null;
-  const thematiquesData = node?.field_thematiques || null;
-  const rubriquesData = node?.field_rubriques || null;
-  const trombinoscopeData = node?.field_trombinoscope || null;
+  // const collectionData = node?.field_collection || null;
+  // const thematiquesData = node?.field_thematiques || null;
+  // const rubriquesData = node?.field_rubriques || null;
+  // const trombinoscopeData = node?.field_trombinoscope || null;
   const authorsData = node?.field_authors || null;
   // const isPublic = node?.ccs || null;
 
-  console.log("trombinoscopeData", node);
+  // console.log("trombinoscopeData", node);
 
   return (
     <>

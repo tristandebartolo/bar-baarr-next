@@ -5,7 +5,7 @@ import UIkit from "uikit";
 // Types
 import { ItemsArticlesParagraphProps } from "@/lib/types/typesParagraphEmbed";
 // Composent
-export default function NormalWrapper({ node }: { node: ItemsArticlesParagraphProps }) {
+export default function NormalWrapper({ node, pembed }: { node: ItemsArticlesParagraphProps, pembed: boolean }) {
   const TitleTag = node.field_hn as keyof JSX.IntrinsicElements;
 
   const hasArticles = node?.field_articles || null;

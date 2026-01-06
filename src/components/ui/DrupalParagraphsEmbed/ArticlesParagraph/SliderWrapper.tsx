@@ -11,7 +11,7 @@ import "./SliderWrapper.scss";
 import { ItemsArticlesParagraphProps } from "@/lib/types/typesParagraphEmbed";
 import ArticleNode from "./ArticleUi/ArticleNode";
 
-export default function SliderWrapper({ node }: { node: ItemsArticlesParagraphProps }) {
+export default function SliderWrapper({ node, pembed }: { node: ItemsArticlesParagraphProps, pembed: boolean }) {
   const sliderRef = useRef<HTMLDivElement>(null);
   const [isMounted, setIsMounted] = useState(false);
 
