@@ -1,11 +1,5 @@
-import {
-	AlignType, HnType, ModeDisplayType, TemplateCardType
-}
-from "./typesOptionsJournal";
-import {
-	AuthorArticle, Vignette, TaxonomyTerm, PathItem
-}
-from "./typesPageJournal";
+import {AlignType, ColonnesTypes, HnType, ModeDisplayType, TemplateCardType} from "./typesOptionsJournal";
+import {AuthorArticle, Vignette, TaxonomyTerm, PathItem} from "./typesPageJournal";
 
 // Types
 // export interface PathItem {
@@ -159,7 +153,7 @@ export interface LayoutParagraphRegionSettings {
 }
 
 export type OptionStringValueType = {
-	[key: string]: string | number;
+[key: string]: string | number;
 };
 
 export interface LayoutParagraphBehaviorSettings {
@@ -189,8 +183,7 @@ export interface LayoutParagraphSection {
 	regions: Record < string, {
 		settings: LayoutParagraphRegionSettings;
 		items?: ItemsParagraphProps[];
-	}
-	>;
+	} >;
 }
 
 export interface TitleIconParagraphDataProps extends ParagraphProps {
@@ -232,7 +225,8 @@ export interface ArticlesParagraphDataProps extends ParagraphProps {
 	field_title: string;
 	field_mode_display: ModeDisplayType;
 	field_mode?: "grid" | "slideshow" | "normal" | "slider";
-	field_mode_grid?: string;
+	field_mode_grid?: ColonnesTypes;
+	field_mode_grid_md?: ColonnesTypes;
 	field_style_image: string;
 	field_template_display: TemplateCardType;
 	field_articles: ArticleType[] | PageType[];
@@ -248,7 +242,8 @@ export interface ArticleByTermParagraphDataProps extends ParagraphProps {
 	field_title: string;
 	field_mode_display: ModeDisplayType;
 	field_mode?: "grid" | "slideshow" | "normal" | "slider";
-	field_mode_grid?: string;
+	field_mode_grid?: ColonnesTypes;
+	field_mode_grid_md?: ColonnesTypes;
 	field_min_height?: string;
 	field_style_image: string;
 	field_template_display: TemplateCardType;
@@ -270,7 +265,8 @@ export interface GalerieParagraphDataProps extends ParagraphProps {
 	field_hn: HnType;
 	field_show_title: boolean;
 	field_mode: "grid" | "slideshow" | "normal" | "slider";
-	field_mode_grid: "2" | "3" | "4";
+	field_mode_grid?: ColonnesTypes;
+	field_mode_grid_md?: ColonnesTypes;
 	field_style_vignette: string;
 	field_lightbox: boolean;
 	field_title: string;
@@ -300,6 +296,7 @@ export interface VideoParagraphDataProps extends ParagraphProps {
 	field_show_title: boolean;
 	field_title: string;
 	field_url_embed: string;
+	field_text?: string;
 };
 
 export interface PollParagraphDataProps extends ParagraphProps {
@@ -345,4 +342,4 @@ export interface AccordionDataProps extends ParagraphProps {
 	field_accordion: ItemsParagraphProps[];
 };
 
-export type ItemsArticlesParagraphProps = | ArticlesParagraphDataProps | ArticleByTermParagraphDataProps;
+export type ItemsArticlesParagraphProps = |ArticlesParagraphDataProps | ArticleByTermParagraphDataProps;

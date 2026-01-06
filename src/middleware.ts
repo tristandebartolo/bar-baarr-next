@@ -1,49 +1,64 @@
-// middleware.ts – version anti-mismatch Server Actions (local + prod)
-import { NextRequest, NextResponse } from "next/server";
+// src/middleware.ts
+import {NextRequest, NextResponse} from "next/server";
 import NextAuth from "next-auth";
-import { authConfig } from "@/auth/auth.config";
+import {authConfig} from "@/auth/auth.config";
 
-const { auth } = NextAuth(authConfig);
+const {auth} = NextAuth(authConfig);
 
 export default auth(async function middleware(req: NextRequest) {
-  const { pathname } = req.nextUrl;
 
-  // 1. Redirection racine → /fr (inchangée, safe)
-  if (pathname === "/" || pathname === "") {
-    const url = req.nextUrl.clone();
-    url.pathname = "/fr";
-    return NextResponse.redirect(url);
-  }
+	const {pathname} = req.nextUrl;
+	const supportedLocales = ["fr", "en", "it"] as const;
+	const defaultLocale = "fr";
 
-  // 2. Locale (inchangée, safe)
-  const locale = pathname.split("/")[1] && pathname.split("/")[1] !== "api" ? pathname.split("/")[1] : "fr";
-  process.env.LANG = locale;
-  process.env.LC_ALL = locale;
-  process.env.LANGUAGE = locale;
+	// 1. Early return pour TOUTES les routes internes de Next-Auth
+	// Cela laisse Next-Auth les gérer nativement sans toucher au locale
+	if (pathname.startsWith("/.well-known") || pathname.startsWith("/api/auth")) {
+		return NextResponse.next();
+	}
 
-  // 3. Headers SEULEMENT pour les routes NextAuth en prod (pas pour Server Actions)
-  const response = NextResponse.next();
-  response.headers.set("x-locale", locale);
+	const url = req.nextUrl.clone();
 
-  const isProd = process.env.NODE_ENV === "production";
-  const isAuthRoute = pathname.startsWith("/api/auth");
+	// 1. Redirection racine → /fr
+	if (pathname === "/" || pathname === "") {
+		url.pathname = "/fr";
+		return NextResponse.redirect(url);
+	}
 
-  response.headers.delete('x-powered-by');
-  response.headers.delete('x-nextjs-cache');
-  response.headers.delete('x-middleware-prefetch');
+	const pathnameHasLocale = supportedLocales.some((loc) => pathname.startsWith(`/${loc}/`) || pathname === `/${loc}`);
 
-  if (isProd && isAuthRoute) {
-    // Force les headers UNIQUEMENT pour NextAuth en prod (évite le :3000)
-    const publicHost = "next.trstn.fr"; // Ton domaine exact
-    response.headers.set("x-forwarded-host", publicHost);
-    response.headers.set("x-forwarded-proto", "https");
-  }
+	// 2. Redirection racine → /fr + /alias
+	if (! pathnameHasLocale) {
+		url.pathname = "/fr" + pathname;
+		return NextResponse.redirect(url);
+	}
 
-  return response;
+	// 3. Extraction sécurisée du locale avec liste blanche
+	const segments = pathname.split("/").filter(Boolean);
+	const potentialLocale = segments[0];
+
+	const locale = potentialLocale !== undefined && supportedLocales.includes(potentialLocale as typeof supportedLocales[number]) ? potentialLocale : defaultLocale;
+
+	// Set env vars
+	process.env.LANG = locale;
+	process.env.LC_ALL = locale;
+	process.env.LANGUAGE = locale;
+
+	// 4. Headers personnalisés
+	const response = NextResponse.next();
+	response.headers.set("x-locale", locale);
+
+	response.headers.delete("x-powered-by");
+	response.headers.delete("x-nextjs-cache");
+	response.headers.delete("x-middleware-prefetch");
+
+	return response;
 });
 
 export const config = {
-  matcher: [
-    "/((?!_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt|manifest.json|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|xml)$).*)",
-  ],
+	matcher: [
+		// Exclut explicitement tout ce qui peut poser problème
+		// Applique seulement aux pages réelles (pas assets, pas .well-known, pas api/auth)
+		"/((?!_next/static|_next/image|api|_next|favicon.ico|sitemap.xml|robots.txt|manifest.json|.well-known|.*\\..*).*)",
+	]
 };

@@ -11,6 +11,7 @@ import TwitterPostParagraph from "../DrupalParagraphsEmbed/TwitterPostParagraph"
 import MessageParagraph from "../DrupalParagraphsEmbed/MessageParagraph";
 import GalerieParagraph from "../DrupalParagraphsEmbed/GalerieParagraph";
 import ArticlesParagraph from "../DrupalParagraphsEmbed/ArticlesParagraph";
+import XParagraph from "../DrupalParagraphsEmbed/XParagraph";
 // import ArticleParagraph from "./paragraphs/ArticleParagraph";
 // import ListArticlesParagraph from "./paragraphs/ListArticlesParagraph";
 // import TwitterParagraph from "./paragraphs/TwitterParagraph";
@@ -22,10 +23,10 @@ const PARAGRAPH_COMPONENT_MAP: Record<string, React.ComponentType<any>> = {
   message: MessageParagraph,
   // article: ArticleParagraph,
   articles: ArticlesParagraph,
-  post_x: TwitterPostParagraph,
+  articles_by_term: ArticlesParagraph,
+  post_x: XParagraph,
   galerie: GalerieParagraph,
   // "quote": QuoteParagraph,
-  // etc.
 };
 
 export default function DrupalEntities({
@@ -68,11 +69,9 @@ export default function DrupalEntities({
 
         const { node } = res;
 
-        console.log('node', node)
-
         // On détermine le type de paragraph via le champ Drupal (ex: node.type ou node.bundle)
         // Dans ton cas, tu as probablement un champ comme node.type ou node.bundle
-        const paragraphType = node.type || node.bundle || "unknown";
+        const paragraphType = node.entity_bundle || "unknown";
 
         // On cherche le composant correspondant
         const Component = PARAGRAPH_COMPONENT_MAP[paragraphType];

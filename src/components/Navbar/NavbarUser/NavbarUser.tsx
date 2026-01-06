@@ -40,7 +40,7 @@ export function NavbarUser({ sessionUser }: { sessionUser?: SessionUser}) {
 
   return (
     <nav className="menu-block">
-      <ul className="navbar menu-ulh dark:text-cyan-50">
+      <ul className="flex gap-5 navbar menu-ulh dark:text-cyan-50">
         {sessionUser && (
           <>
             <li>
@@ -50,7 +50,7 @@ export function NavbarUser({ sessionUser }: { sessionUser?: SessionUser}) {
               </Link>
             </li>
             <li>
-              <button onClick={() => signOut({ callbackUrl: '/fr', redirect: true })} type="button">
+              <button className="cursor-pointer" onClick={() => signOut({ callbackUrl: '/fr', redirect: true })} type="button">
                 <span className="icon-gm-power_settings_new"></span>
                 <span className="visually-hidden">Déconnexion</span>
               </button>

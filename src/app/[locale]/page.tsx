@@ -10,33 +10,23 @@ type PropsMetatags = {
   params: Promise<{ locale: string }>;
 };
 // generateMetadata
-export async function generateMetadata({
-  params,
-}: PropsMetatags): Promise<Metadata> {
-  // const locale = (await params).locale
+export async function generateMetadata({ params }: PropsMetatags): Promise<Metadata> {
   const { locale } = await params;
   const accueil = await getMetatags("0", "nid", "home", locale);
-  // console.log('accueil', accueil)
-  return accueil && accueil.node
-    ? accueil.node
-    : {
-        title: "home",
-      };
+  return accueil && accueil.node ? accueil.node : {title: "home"};
 }
 // Page
-export default async function Page({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}) {
+export default async function Page({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   const accueil = await getAccueil(locale);
+
+  // const alias = `/article?alias=${'/journal/culture/arts/addiction-un-cocktail-vampirique'}`;
+  // const accueilNode = await getApiArticlee(alias);
+  // console.log('res.json()', accueilNode);
 
   if (!accueil?.success && !accueil?.node) {
     return notFound();
   }
-
-  // console.log("accueil", accueil);
 
   return <PageLanding node={accueil.node} locale={locale} />;
 }

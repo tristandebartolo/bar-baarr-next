@@ -26,6 +26,7 @@ export function MenuLink({
       : "_nextLink";
 
   if (typeLink === "_nextLink") {
+    console.log('href', href)
     return (
       <Link href={href} className="w-full flex items-center justify-between p-2">
         {attributes?.icon && Array.isArray(attributes.icon) && (

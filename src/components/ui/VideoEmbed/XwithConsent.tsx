@@ -3,23 +3,15 @@
 
 import { useEffect, useState } from "react";
 import { cookieConsent } from "@/lib/helpers/cookieConsent";
-import VideoEmbed from "./VideoEmbed";
-import { VIDEO_PROVIDERS } from "@/lib/types/typesCookies";
+import TwitterPostParagraph from "../DrupalParagraphsEmbed/TwitterPostParagraph";
+import { TwitterParagrapDataProps } from "@/lib/types/typesParagraphEmbed";
 
-const getProvider = (url: string): keyof typeof VIDEO_PROVIDERS | null => {
-  if (url.includes("youtube") || url.includes("youtu.be")) return "youtube";
-  if (url.includes("vimeo")) return "vimeo";
-  if (url.includes("dailymotion")) return "dailymotion";
-  if (url.includes("archive.org")) return "archive";
-  if (url.includes("ina.fr")) return "ina";
-  return null;
-};
 
-export default function VideoWithConsent({ url }: { url: string }) {
+export default function XwithConsent({ node }: { node: TwitterParagrapDataProps }) {
   const [isMounted, setIsMounted] = useState(false);
   const [hasConsent, setHasConsent] = useState(false);
 
-  const provider = getProvider(url);
+  const provider = 'x';
   const cookieId = provider ? `video_${provider}` : null;
 
   useEffect(() => {
@@ -49,22 +41,17 @@ export default function VideoWithConsent({ url }: { url: string }) {
         <div className="absolute inset-0 z-10 flex items-center justify-center p-8">
           <div className="prgh-video-info max-w-md rounded-2xl p-8 text-center">
             <div className="mx-auto mt-4 mb-3 flex h-15 w-15 items-center justify-center rounded-full bg-gray-200 dark:bg-neutral-950">
-              <span
-                className={`text-3xl text-gray-600 dark:text-gray-400 icon-gm-${provider ? provider : "video"}`}
-              ></span>
+              <span className="text-gray-600 dark:text-gray-400 text-3xl icon-gm-x" ></span>
             </div>
-            <p className="mb-3 text-gray-600 dark:text-gray-400">
-              Cette vidéo est hébergée par <strong>{provider ? VIDEO_PROVIDERS[provider].name : "un service tiers"}</strong>
-              .
-              <br />
-              Pour la visionner, merci d&apos;accepter les cookies
+            <p className="mb-1 text-gray-600 dark:text-gray-400 text-sm">
+              Pour la visionner le post, merci d&apos;accepter les cookies
             </p>
             {provider && (
               <button
                 onClick={() => cookieConsent.acceptCookie(cookieId!)}
-                className="hover:text-one/70 text-one cursor-pointer text-lg font-semibold transition"
+                className="hover:text-one/70 cursor-pointer font-semibold text-one transition text-sm"
               >
-                Accepter les cookies <strong>{provider ? VIDEO_PROVIDERS[provider].name : "un service tiers"}</strong>
+                Accepter les cookies X
               </button>
             )}
           </div>
@@ -75,5 +62,11 @@ export default function VideoWithConsent({ url }: { url: string }) {
 
   // === CONSENTEMENT ACCORDÉ ===
   // On charge vraiment la vidéo
-  return <VideoEmbed field_embed_url={url} width={800} height={450} className="mx-auto" />;
+  return (
+    <TwitterPostParagraph
+      node={node}
+      langcode={"fr"}
+      theme="dark"
+    />
+  );
 }

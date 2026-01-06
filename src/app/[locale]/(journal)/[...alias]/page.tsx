@@ -1,9 +1,9 @@
 // Actions
-import { ccCookies, getDataByAlias } from "@/lib/action";
+import { ccCookies, getDataByAlias, getDataWithCookie } from "@/lib/action";
 // Auth
 import { auth } from "@/auth/auth";
 // Next
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 import { JournalResponse } from "@/lib/types/index";
 import PageLanding from "@/components/Pages/PageLanding";
@@ -20,23 +20,33 @@ export default async function Page({ params }: PageProps) {
   const { locale, alias } = await params;
   const currentTheme = (await ccCookies("theme")) || "dark";
 
-  const buildedAlias = `/journal/${alias.join("/")}`;
+  const buildedAlias = `/${alias.join("/")}`;
 
-  const post: JournalResponse = await getDataByAlias(
+  console.log(buildedAlias)
+
+  // const post: JournalResponse = await getDataByAlias(
+  //   buildedAlias,
+  //   session,
+  //   locale,
+  // );
+
+   const post: JournalResponse = await getDataWithCookie(
     buildedAlias,
     session,
     locale,
   );
 
+  console.log('post2', post)
+
   if (post?.success && !post?.node) {
-    return notFound();
+    notFound();
   }
   
   const { node } = post;
 
   // Si node est null → 404 (ou tu peux afficher un loader)
   if (!node) {
-    return notFound();
+    notFound();
   }
 
   // console.log("post", post);
@@ -46,7 +56,9 @@ export default async function Page({ params }: PageProps) {
   return (
     <>
      {node.bundle === "article" ? (
-        <PageArticle node={node} locale={locale} theme={currentTheme} />
+        <>
+          <PageArticle node={node} locale={locale} theme={currentTheme} />
+        </>
       ) : (
         <PageLanding node={node} locale={locale} />
       )}
