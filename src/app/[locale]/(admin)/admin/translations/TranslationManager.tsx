@@ -62,6 +62,7 @@ export default function TranslationManager({ section }: { section: string }) {
           } else {
             data[lang] = {};
           }
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (e) {
           data[lang] = {};
         }
@@ -73,7 +74,7 @@ export default function TranslationManager({ section }: { section: string }) {
     if (languages.length > 0) {
       loadTranslations();
     }
-  }, [languages, section]); // ← Ajout de languages ici !
+  }, [languages, section]);
 
   const currentTranslations = translations[selectedLang] || {};
   const keys = Object.keys(currentTranslations).sort();
@@ -272,7 +273,7 @@ export default function TranslationManager({ section }: { section: string }) {
                 input.value = "";
                 addToast(`Langue "${code.toUpperCase()}" ajoutée ! L'onglet est maintenant disponible.`, "success");
               } else {
-                const error = await res.json();
+                // const error = await res.json();
                 // alert(error.error || "");
                 addToast("Erreur lors de l'ajout de la langue", "error");
               }

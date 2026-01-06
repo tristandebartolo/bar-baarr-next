@@ -1,12 +1,13 @@
-// src/app/admin/translations/Sidebar.tsx
 "use client";
-
+// Libs
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-
+// Context
+import { useToast } from "@/lib/helpers/toastContext";
+// defaultFolders
 const defaultFolders = [{ name: "/", path: "", icon: "icon-gm-container" }];
-
+// Composent
 export default function Sidebar() {
   const pathname = usePathname();
   const currentSection = pathname.split("/").pop() || "";
@@ -15,6 +16,7 @@ export default function Sidebar() {
   const [isCreating, setIsCreating] = useState(false);
   const [newSectionName, setNewSectionName] = useState("");
   const [deletingSection, setDeletingSection] = useState(false); // Confirmation suppression
+  const { addToast } = useToast();
 
   // Chargement des sections
   useEffect(() => {
@@ -42,7 +44,7 @@ export default function Sidebar() {
       setNewSectionName("");
       setIsCreating(false);
     } else {
-      alert("Erreur lors de la création de la section");
+      addToast("Erreur lors de la création de la section", "error");
     }
   };
 
@@ -61,7 +63,7 @@ export default function Sidebar() {
       // Redirection vers la racine
       window.location.href = "/fr/admin/translations";
     } else {
-      alert("Erreur lors de la suppression de la section");
+      addToast("Erreur lors de la suppression de la section", "error");
     }
   };
 

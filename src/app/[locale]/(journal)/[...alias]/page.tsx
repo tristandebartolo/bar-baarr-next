@@ -1,9 +1,9 @@
 // Actions
-import { ccCookies, getDataByAlias, getDataWithCookie } from "@/lib/action";
+import { ccCookies, getDataWithCookie } from "@/lib/action";
 // Auth
 import { auth } from "@/auth/auth";
 // Next
-import { notFound, redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 
 import { JournalResponse } from "@/lib/types/index";
 import PageLanding from "@/components/Pages/PageLanding";
@@ -21,14 +21,6 @@ export default async function Page({ params }: PageProps) {
   const currentTheme = (await ccCookies("theme")) || "dark";
 
   const buildedAlias = `/${alias.join("/")}`;
-
-  console.log(buildedAlias)
-
-  // const post: JournalResponse = await getDataByAlias(
-  //   buildedAlias,
-  //   session,
-  //   locale,
-  // );
 
    const post: JournalResponse = await getDataWithCookie(
     buildedAlias,
@@ -48,10 +40,6 @@ export default async function Page({ params }: PageProps) {
   if (!node) {
     notFound();
   }
-
-  // console.log("post", post);
-
-  // const Component = node?.bundle === "article" ? PageArticle : PageLanding;
 
   return (
     <>
