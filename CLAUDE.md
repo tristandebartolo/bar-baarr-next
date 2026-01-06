@@ -65,9 +65,9 @@ Le système utilise un pattern Layout Builder pour le rendu dynamique :
 ### Authentification
 
 1. Credentials provider vers API Drupal
-2. JWT encryption des données sensibles
+2. JWT encryption
 3. Session cookies secure/httpOnly
-4. CSRF token depuis Drupal
+4. CSRF token Drupal
 
 ### Fetching de données
 
