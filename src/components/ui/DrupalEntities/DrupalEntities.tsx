@@ -9,11 +9,8 @@ import { getDataEmbed } from "@/lib/action/MediaAction";
 import VideoParagraph from "@/components/ui/DrupalParagraphsEmbed/VideoParagraph";
 import MessageParagraph from "../DrupalParagraphsEmbed/MessageParagraph";
 import GalerieParagraph from "../DrupalParagraphsEmbed/GalerieParagraph";
-import ArticlesParagraph from "../DrupalParagraphsEmbed/ArticlesParagraph";
+import ArticlesOrkesterParagraph from "../DrupalParagraphsEmbed/ArticlesOrkesterParagraph";
 import XParagraph from "../DrupalParagraphsEmbed/XParagraph";
-// import ArticleParagraph from "./paragraphs/ArticleParagraph";
-// import ListArticlesParagraph from "./paragraphs/ListArticlesParagraph";
-// import TwitterParagraph from "./paragraphs/TwitterParagraph";
 
 // Mapping exact : type Drupal → Composant React
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -21,8 +18,8 @@ const PARAGRAPH_COMPONENT_MAP: Record<string, React.ComponentType<any>> = {
   video: VideoParagraph,
   message: MessageParagraph,
   // article: ArticleParagraph,
-  articles: ArticlesParagraph,
-  articles_by_term: ArticlesParagraph,
+  articles: ArticlesOrkesterParagraph,
+  articles_by_term: ArticlesOrkesterParagraph,
   post_x: XParagraph,
   galerie: GalerieParagraph,
   // "quote": QuoteParagraph,
@@ -82,6 +79,11 @@ export default function DrupalEntities({
 
         // On récupère tous les data-* comme props (alignement, classes, etc.)
         const props: Record<string, unknown> = { node, langcode, theme };
+
+        props['pembed'] = false;
+        if (paragraphType === 'articles_by_term' || paragraphType === 'articles') {
+          props['pembed'] = true;
+        }
 
       
         Array.from(el.attributes).forEach((attr) => {

@@ -60,11 +60,11 @@ export default function SliderWrapper({ node }: { node: ItemsArticlesParagraphPr
       )}
 
       <div ref={sliderRef} className="relative mx-auto flex w-full flex-col">
-        <div className={`uk-slider-items uk-child-width-1-1 uk-child-width-1-${numberColumns}@m relative md:grid md:grid-cols-${numberColumnsMd} lg:grid-cols-${parseInt(numberColumns) > 4 ? parseInt(numberColumns)-1 : numberColumns} xl:grid-cols-${numberColumns} md:items-start uk-grid-small gap-3`}>
+        <div className={`uk-slider-items uk-gr  id uk-child-width-1-1 uk-child-width-1-${numberColumns}@m relative md:grid md:grid-cols-${numberColumnsMd} lg:grid-cols-${parseInt(numberColumns) > 4 ? parseInt(numberColumns)-1 : numberColumns} xl:grid-cols-${numberColumns} md:items-start uk-grid-small gap-3`}>
           {node.field_articles.map((item, i) => (
             <div
               key={i}
-              className={`relative w-1/1 md:w-1/3 lg:w-1/4`}
+              className={`   w-1/1 md:w-1/${parseInt(numberColumns) > 4 ? parseInt(numberColumns)-1 : numberColumns}lg:w-1/${numberColumns}`}
               draggable="true"
             >
              

@@ -30,13 +30,6 @@ export default function SlideshowWrapper({ node }: { node: ItemsArticlesParagrap
 
   const hnSize = node?.field_font_size || "2xl";
   const numberColumns = node?.field_mode_grid || "2";
-  // const gridCols =
-  //   {
-  //     "1": "g-cols g-cols-1",
-  //     "2": "g-cols g-cols-2",
-  //     "3": "g-cols g-cols-3",
-  //     "4": "g-cols g-cols-4",
-  //   }[numberColumns] || "2";
 
   return (
     <div className="my-12">

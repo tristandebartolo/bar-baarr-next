@@ -10,9 +10,8 @@ import BlockTitle from "@/components/ui/DrupalParagraphsEmbed/ArticlesParagraph/
 import ArticleNode from "./ArticleUi/ArticleNode";
 // Composent
 export default function GridWrapper({ node }: { node: ItemsArticlesParagraphProps }) {
-  const gridRef = useRef<HTMLDivElement>(null);
 
-  // const TitleTag = node.field_hn as keyof JSX.IntrinsicElements;
+  const gridRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (node.field_mode === "grid" && gridRef.current) {

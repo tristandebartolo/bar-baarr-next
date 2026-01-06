@@ -14,7 +14,7 @@ const PARAGRAPH_ARTICLE_TYPE_MAP: Record<string, React.ComponentType<any>> = {
   normal: NormalWrapper,
 };
 // Component
-export default function ArticlesOrkesterParagraph({ node }: { node?: ItemsArticlesParagraphProps }) {
+export default function ArticlesOrkesterParagraph({ node, pembed = false }: { node?: ItemsArticlesParagraphProps, pembed?: boolean }) {
   const availables_display = ["grid", "slideshow", "slider", "normal"];
   if (!node || !node.field_mode || !availables_display.includes(node.field_mode)) return null;
   console.log("node", node);
