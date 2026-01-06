@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'game';
-  src:  url('fonts/game.eot?renvdo');
-  src:  url('fonts/game.eot?renvdo#iefix') format('embedded-opentype'),
-    url('fonts/game.ttf?renvdo') format('truetype'),
-    url('fonts/game.woff?renvdo') format('woff'),
-    url('fonts/game.svg?renvdo#game') format('svg');
+  src:  url('fonts/game.eot?sb22q2');
+  src:  url('fonts/game.eot?sb22q2#iefix') format('embedded-opentype'),
+    url('fonts/game.ttf?sb22q2') format('truetype'),
+    url('fonts/game.woff?sb22q2') format('woff'),
+    url('fonts/game.svg?sb22q2#game') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -25,6 +25,45 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-gm-ina:before {
+  content: "\ea7f";
+}
+.icon-gm-archive:before {
+  content: "\ea82";
+}
+.icon-gm-dailymotion:before {
+  content: "\ea83";
+}
+.icon-gm-linkedin-1:before {
+  content: "\ea1c";
+}
+.icon-gm-vimeo:before {
+  content: "\ea1d";
+}
+.icon-gm-youtube:before {
+  content: "\ea1e";
+}
+.icon-gm-instagram-1:before {
+  content: "\ea1f";
+}
+.icon-gm-sort-alpha-asc:before {
+  content: "\f15d";
+}
+.icon-gm-sort-alpha-desc:before {
+  content: "\f15e";
+}
+.icon-gm-sort-amount-asc:before {
+  content: "\f160";
+}
+.icon-gm-sort-amount-desc:before {
+  content: "\f161";
+}
+.icon-gm-sort-numeric-asc:before {
+  content: "\f162";
+}
+.icon-gm-sort-numeric-desc:before {
+  content: "\f163";
+}
 .icon-gm-quote:before {
   content: "\ea23";
 }
@@ -477,9 +516,6 @@
 }
 .icon-gm-viber:before {
   content: "\ea16";
-}
-.icon-gm-vimeo:before {
-  content: "\ea17";
 }
 .icon-gm-waze:before {
   content: "\ea18";
@@ -1161,34 +1197,4 @@
 }
 .icon-gm-chat2:before {
   content: "\e9bf";
-}
-.icon-gm-linkedin-1:before {
-  content: "\ea1c";
-}
-.icon-gm-vimeo-1:before {
-  content: "\ea1d";
-}
-.icon-gm-youtube:before {
-  content: "\ea1e";
-}
-.icon-gm-instagram-1:before {
-  content: "\ea1f";
-}
-.icon-gm-sort-alpha-asc:before {
-  content: "\f15d";
-}
-.icon-gm-sort-alpha-desc:before {
-  content: "\f15e";
-}
-.icon-gm-sort-amount-asc:before {
-  content: "\f160";
-}
-.icon-gm-sort-amount-desc:before {
-  content: "\f161";
-}
-.icon-gm-sort-numeric-asc:before {
-  content: "\f162";
-}
-.icon-gm-sort-numeric-desc:before {
-  content: "\f163";
 }
