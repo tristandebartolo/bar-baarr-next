@@ -5,11 +5,11 @@ import UIkit from "uikit";
 // Types
 import { ItemsArticlesParagraphProps } from "@/lib/types/typesParagraphEmbed";
 // Composents
-import ArticleTitle from "@/components/ui/DrupalParagraphsEmbed/ArticlesWrapperParagraph/ArticleUi/ArticleTitle";
-import BlockTitle from "@/components/ui/DrupalParagraphsEmbed/ArticlesWrapperParagraph/ArticleUi/BlockTitle";
+import ArticleTitle from "@/components/ui/DrupalParagraphsEmbed/ArticlesParagraph/ArticleUi/ArticleTitle";
+import BlockTitle from "@/components/ui/DrupalParagraphsEmbed/ArticlesParagraph/ArticleUi/BlockTitle";
 import ArticleNode from "./ArticleUi/ArticleNode";
 // Composent
-export default function ArticlesGridWrapperParagraph({ node }: { node: ItemsArticlesParagraphProps }) {
+export default function GridWrapper({ node }: { node: ItemsArticlesParagraphProps }) {
   const gridRef = useRef<HTMLDivElement>(null);
 
   // const TitleTag = node.field_hn as keyof JSX.IntrinsicElements;

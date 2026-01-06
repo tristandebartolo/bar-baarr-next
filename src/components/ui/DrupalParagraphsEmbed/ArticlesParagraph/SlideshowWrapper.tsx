@@ -3,11 +3,11 @@
 import { JSX, useEffect, useRef, useState } from "react";
 import UIkit from "uikit";
 // Style
-import "./ArticlesSlideshowWrapperParagraph.scss";
+import "./SlideshowWrapper.scss";
 // Types
 import { ItemsArticlesParagraphProps } from "@/lib/types/typesParagraphEmbed";
 // Composent
-export default function ArticlesSlideshowWrapperParagraph({ node }: { node: ItemsArticlesParagraphProps }) {
+export default function SlideshowWrapper({ node }: { node: ItemsArticlesParagraphProps }) {
   const slideshowRef = useRef<HTMLDivElement>(null);
   const TitleTag = node.field_hn as keyof JSX.IntrinsicElements;
 
@@ -30,13 +30,13 @@ export default function ArticlesSlideshowWrapperParagraph({ node }: { node: Item
 
   const hnSize = node?.field_font_size || "2xl";
   const numberColumns = node?.field_mode_grid || "2";
-  const gridCols =
-    {
-      "1": "g-cols g-cols-1",
-      "2": "g-cols g-cols-2",
-      "3": "g-cols g-cols-3",
-      "4": "g-cols g-cols-4",
-    }[numberColumns] || "2";
+  // const gridCols =
+  //   {
+  //     "1": "g-cols g-cols-1",
+  //     "2": "g-cols g-cols-2",
+  //     "3": "g-cols g-cols-3",
+  //     "4": "g-cols g-cols-4",
+  //   }[numberColumns] || "2";
 
   return (
     <div className="my-12">

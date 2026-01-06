@@ -5,7 +5,7 @@ import UIkit from "uikit";
 // Types
 import { ItemsArticlesParagraphProps } from "@/lib/types/typesParagraphEmbed";
 // Composent
-export default function ArticlesNormalWrapperParagraph({ node }: { node: ItemsArticlesParagraphProps }) {
+export default function NormalWrapper({ node }: { node: ItemsArticlesParagraphProps }) {
   const TitleTag = node.field_hn as keyof JSX.IntrinsicElements;
 
   const hasArticles = node?.field_articles || null;
@@ -16,13 +16,13 @@ export default function ArticlesNormalWrapperParagraph({ node }: { node: ItemsAr
   const numberColumns = node?.field_mode_grid || "2";
   const hnSize = node?.field_font_size || "2xl";
 
-  const gridCols =
-    {
-      "1": "g-cols g-cols-1",
-      "2": "g-cols g-cols-2",
-      "3": "g-cols g-cols-3",
-      "4": "g-cols g-cols-4",
-    }[numberColumns] || "2";
+  // const gridCols =
+  //   {
+  //     "1": "g-cols g-cols-1",
+  //     "2": "g-cols g-cols-2",
+  //     "3": "g-cols g-cols-3",
+  //     "4": "g-cols g-cols-4",
+  //   }[numberColumns] || "2";
 
   return (
     <div className="my-12">

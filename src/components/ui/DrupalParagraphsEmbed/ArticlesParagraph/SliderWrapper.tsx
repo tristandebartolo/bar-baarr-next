@@ -5,13 +5,13 @@ import { JSX, useEffect, useRef, useState } from "react";
 import UIkit from "uikit";
 
 // Style
-import "./ArticlesSliderWrapperParagraph.scss";
+import "./SliderWrapper.scss";
 
 // Types
 import { ItemsArticlesParagraphProps } from "@/lib/types/typesParagraphEmbed";
 import ArticleNode from "./ArticleUi/ArticleNode";
 
-export default function ArticlesSliderWrapperParagraph({ node }: { node: ItemsArticlesParagraphProps }) {
+export default function SliderWrapper({ node }: { node: ItemsArticlesParagraphProps }) {
   const sliderRef = useRef<HTMLDivElement>(null);
   const [isMounted, setIsMounted] = useState(false);
 
