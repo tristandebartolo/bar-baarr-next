@@ -19,15 +19,12 @@ export default function AuthForm() {
   const pathname = usePathname();
   // Détermine où rediriger après login
   const redirectTo = pathname === "/fr/club" ? "/fr" : pathname;
-  console.log('redirectTo', redirectTo)
-
   // Verify
   const verifyRef = useRef<HTMLInputElement | null>(null);
   const [verify, setVerify] = useState("");
   // State form
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("123456");
-  // const [isPassword, setIsPassword] = useState<boolean>(false);
 
   // Use form
   const [errorMessage, formAction, isPending] = useActionState(

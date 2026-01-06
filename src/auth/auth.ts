@@ -1,17 +1,20 @@
-import {encrypt} from "@/auth/session";
+// Libs
 import NextAuth from "next-auth";
+// Auth
+import {encrypt} from "@/auth/session";
 import Credentials from "next-auth/providers/credentials";
 import {authConfig} from "@/auth/auth.config";
+// Helpers
 import {apiLink} from "@/lib/helpers";
+// Types
 import {SdUserType, SessionType, CallbackSessionType} from "@/lib/types";
-// import EmailProvider from "next-auth/providers/email";
-
+// SessionType Type
 const session: SessionType = {
 	strategy: "jwt",
 	maxAge: 30 * 24 * 60 * 60, // 30 days
 	updateAge: 24 * 60 * 60, // 24 hours
 };
-
+// Handlers
 export const {handlers, signIn, signOut, auth} = NextAuth(() => ({
 	useSecureCookies: true,
 	secret: process.env.AUTH_SECRET,
@@ -47,8 +50,7 @@ export const {handlers, signIn, signOut, auth} = NextAuth(() => ({
 
 					const json = await data.json();
 
-					if (data.ok && json.hasOwnProperty("current_user")) { // Récupération du CSRF token
-						const csrfToken = data.headers.get('x-csrf-token');
+					if (data.ok && json.hasOwnProperty("current_user")) {
 
 						// Récupération du cookie de session
 						const setCookieHeader = data.headers.get('set-cookie');
@@ -57,18 +59,12 @@ export const {handlers, signIn, signOut, auth} = NextAuth(() => ({
 							const cookies = setCookieHeader.split(',');
 							const ssess = cookies.find(c => c.trim().startsWith('SSESS'));
 							if (ssess) {
-								sessionCookie = ssess.split(';')[0].trim(); // ex: SSESSxxx=abc123
+								// ex: SSESSxxx=abc123
+								sessionCookie = ssess.split(';')[0].trim();
 							}
 						}
 
-
-						const hash = btoa(credentials.username + ":" + credentials.password);
-
 						const sd: SdUserType = {
-							hash: hash,
-							// uid: json.current_user.uid,
-							// roles: json?.roles,
-							// name: json?.name,
 							session_cookie: sessionCookie,
 							csrf_token: json.csrf_token,
 							logout_token: json.logout_token
@@ -82,9 +78,9 @@ export const {handlers, signIn, signOut, auth} = NextAuth(() => ({
 							email: basicHash,
 							name: json.current_user.name,
 							image: null,
-							firstName: json ?. forname,
-							lastName: json ?. name,
-							roles: json ?. roles
+							firstName: json?.forname,
+							lastName: json?.name,
+							roles: json?.roles
 						};
 
 						return user;
@@ -107,10 +103,10 @@ export const {handlers, signIn, signOut, auth} = NextAuth(() => ({
 
 			if (user) {
 				token.id = user.id;
-				token.firstName = user ?. firstName ?? null;
-				token.name = user ?. name;
-				token.lastName = user ?. lastName;
-				token.roles = user ?. roles;
+				token.firstName = user?.firstName ?? null;
+				token.name = user?.name;
+				token.lastName = user?.lastName;
+				token.roles = user?.roles;
 			}
 			return token;
 		},
@@ -123,9 +119,9 @@ export const {handlers, signIn, signOut, auth} = NextAuth(() => ({
 					email: token.email,
 					id: token.id as string,
 					image: '+++',
-					firstName: token ?. firstName || '',
-					lastName: token ?. lastName || '',
-					roles: token ?. roles || null
+					firstName: token?.firstName || '',
+					lastName: token?.lastName || '',
+					roles: token?.roles || null
 				};
 				session.user = UserLoged;
 			}
