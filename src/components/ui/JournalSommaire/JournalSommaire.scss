@@ -1,0 +1,5 @@
+.sommaire-group:has(ul > li > a.font-bold) {
+  > a.font-bold {
+    font-weight: 400 !important;
+  }
+}
