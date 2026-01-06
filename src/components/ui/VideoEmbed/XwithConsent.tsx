@@ -3,7 +3,7 @@
 
 import { useEffect, useState } from "react";
 import { cookieConsent } from "@/lib/helpers/cookieConsent";
-import TwitterPostParagraph from "../DrupalParagraphsEmbed/TwitterPostParagraph";
+import Xembed from "@/components/ui/VideoEmbed/Xembed";
 import { TwitterParagrapDataProps } from "@/lib/types/typesParagraphEmbed";
 
 
@@ -37,8 +37,8 @@ export default function XwithConsent({ node }: { node: TwitterParagrapDataProps 
   // On affiche TOUJOURS le placeholder → HTML identique serveur/client
   if (!isMounted || (cookieId && !hasConsent)) {
     return (
-      <div className="prgh-video-wrapper relative aspect-video overflow-hidden rounded-xl bg-linear-to-br from-gray-200 to-white dark:from-neutral-800 dark:to-neutral-950">
-        <div className="absolute inset-0 z-10 flex items-center justify-center p-8">
+      <div className="prgh-video-wrapper relative min-h-50 overflow-hidden rounded-xl bg-linear-to-br from-gray-200 to-white dark:from-neutral-800 dark:to-neutral-950">
+        <div className="relative inset-0 z-10 flex items-center justify-center p-8">
           <div className="prgh-video-info max-w-md rounded-2xl p-8 text-center">
             <div className="mx-auto mt-4 mb-3 flex h-15 w-15 items-center justify-center rounded-full bg-gray-200 dark:bg-neutral-950">
               <span className="text-gray-600 dark:text-gray-400 text-3xl icon-gm-x" ></span>
@@ -61,9 +61,9 @@ export default function XwithConsent({ node }: { node: TwitterParagrapDataProps 
   }
 
   // === CONSENTEMENT ACCORDÉ ===
-  // On charge vraiment la vidéo
+  // On charge la vidéo
   return (
-    <TwitterPostParagraph
+    <Xembed
       node={node}
       langcode={"fr"}
       theme="dark"

@@ -3,7 +3,7 @@
 import { TwitterParagrapDataProps } from "@/lib/types/typesParagraphEmbed";
 import { useEffect, useRef } from "react";
 // Composent
-export default function TwitterPostParagraph({
+export default function Xembed({
   node,
   langcode = "fr",
   theme = "dark",
