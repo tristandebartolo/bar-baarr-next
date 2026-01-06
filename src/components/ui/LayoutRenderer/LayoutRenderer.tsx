@@ -5,14 +5,10 @@ import Image from "next/image";
 import Link from "next/link";
 // Types
 import {
-  ArticleParagraphProps,
-  ArticlesParagraphDataProps,
-  ArticleType,
   ItemsArticlesParagraphProps,
   ItemsParagraphProps,
   LayoutParagraphRegionSettings,
   MessageParagraphDataProps,
-  PageType,
   TexteParagraphProps,
   TwitterParagrapDataProps,
   VideoParagraphDataProps,
@@ -20,26 +16,10 @@ import {
 // Styles
 import './LayoutRenderer.scss';
 // Components
-import ArticlesParagraph from "../DrupalParagraphsEmbed/ArticlesParagraph";
-import ArticleParagraph from "../DrupalParagraphsEmbed/ArticleParagraph";
-import ArticleOverlayParagraph from "../DrupalParagraphsEmbed/ArticleOverlayParagraph";
-import TwitterPostParagraph from "../DrupalParagraphsEmbed/TwitterPostParagraph";
 import MessageParagraph from "../DrupalParagraphsEmbed/MessageParagraph";
 import VideoParagraph from "../DrupalParagraphsEmbed/VideoParagraph";
 import ArticlesOrkesterParagraph from "../DrupalParagraphsEmbed/ArticlesOrkesterParagraph";
-import ArticlesGridWrapperParagraph from "../DrupalParagraphsEmbed/ArticlesWrapperParagraph/ArticlesGridWrapperParagraph";
-// Components Map
-const PARAGRAPH_ARTICLE_MAP: Record<string, React.ComponentType<any>> = {
-  card: ArticleParagraph,
-  card_only: ArticleParagraph,
-  list: ArticleParagraph,
-  overlay: ArticleOverlayParagraph,
-  card_left: ArticleParagraph,
-  card_right: ArticleParagraph,
-  tiny: ArticleParagraph,
-  tiny_left: ArticleParagraph,
-  tiny_right: ArticleParagraph,
-};
+import XwithConsent from "../VideoEmbed/XwithConsent";
 // Composent
 const renderBlock = (block: ItemsParagraphProps): ReactNode => {
   switch (block.entity_bundle) {
@@ -49,78 +29,6 @@ const renderBlock = (block: ItemsParagraphProps): ReactNode => {
       const articlesBlock = block as ItemsArticlesParagraphProps;
       return <ArticlesOrkesterParagraph node={articlesBlock} />;
     }
-
-    case "grid":
-    case "normal": {
-      const articlesBlock = block as ItemsArticlesParagraphProps;
-      return <ArticlesGridWrapperParagraph node={articlesBlock} />;
-    }
-    
-    // case "article": {
-    //   const b = block as ArticleParagraphProps;
-    //   const art = b.field_article?.[0];
-    //   if (!art) return null;
-    //   const modeDisplay = b?.field_mode_display || "card_left";
-    //   // const item = block as unknown;
-
-    //   // On cherche le composant correspondant
-    //   const ParagraphArticleMode = PARAGRAPH_ARTICLE_MAP[modeDisplay];
-    //   if (!ParagraphArticleMode) {
-    //     return;
-    //   }
-    //   return <ParagraphArticleMode node={b as ArticleParagraphProps} />;
-    //   // return <ArticleParagraph node={item as ArticleParagraphProps} />
-    // }
-
-    // case "articles": {
-    //   const b = block as ArticlesParagraphDataProps;
-    //   const items = b.field_articles ?? [];
-    //   return (
-    //     <div className="grid grid-cols-1 gap-5">
-    //       {items.map((art: ArticleType | PageType, i: number) => {
-    //         const d = {
-    //           entity_bundle: "article",
-    //           field_article: [art],
-    //           field_hn: b?.field_hn,
-    //           field_alignement: b?.field_alignement,
-    //           field_font_size: b?.field_font_size,
-    //           field_mode_display: b?.field_mode_display,
-    //           field_style_image: b?.field_style_image,
-    //           field_template_display: b?.field_template_display,
-    //           field_min_height: b?.field_min_height,
-    //           id: b?.id,
-    //           status: b?.status,
-    //           uuid: b?.uuid,
-    //           langcode: b?.langcode,
-    //           parent_uuid: b?.parent_uuid,
-    //           region: b?.region,
-    //         };
-    //         return (
-    //           // On réutilise renderBlock en forçant le type
-    //           <div key={i}>{renderBlock(d as ItemsParagraphProps)}</div>
-    //         );
-    //       })}
-    //     </div>
-    //   );
-    // }
-
-    // case "articles": {
-    //   const items = block.field_articles ?? [];
-    //   return (
-    //     <div className="grid grid-cols-1 gap-5">
-    //       {items.map((art: ArticleReference, i: number) => (
-    //         // On réutilise renderBlock en forçant le type
-    //         <div key={i}>
-    //           {renderBlock({
-    //             ...block,
-    //             entity_bundle: "article",
-    //             field_article: [art],
-    //           } as ItemsParagraphProps)}
-    //         </div>
-    //       ))}
-    //     </div>
-    //   );
-    // }
 
     case "text": {
       const b = block as TexteParagraphProps;
@@ -145,10 +53,8 @@ const renderBlock = (block: ItemsParagraphProps): ReactNode => {
 
     case "post_x": {
       const b = block as TwitterParagrapDataProps;
-      return <TwitterPostParagraph node={b} />;
+      return <XwithConsent node={b} />;
     }
-
-    // TwitterPostParagraph
 
     // case "accordions": {
     //   const accs = (block as AccordionsBlock).field_accordions ?? [];

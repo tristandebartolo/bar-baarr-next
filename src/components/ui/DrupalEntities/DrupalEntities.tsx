@@ -7,7 +7,6 @@ import ReactDOM from "react-dom/client";
 import { getDataEmbed } from "@/lib/action/MediaAction";
 // Composants
 import VideoParagraph from "@/components/ui/DrupalParagraphsEmbed/VideoParagraph";
-import TwitterPostParagraph from "../DrupalParagraphsEmbed/TwitterPostParagraph";
 import MessageParagraph from "../DrupalParagraphsEmbed/MessageParagraph";
 import GalerieParagraph from "../DrupalParagraphsEmbed/GalerieParagraph";
 import ArticlesParagraph from "../DrupalParagraphsEmbed/ArticlesParagraph";

@@ -1,9 +1,8 @@
-// components/paragraphs/TwitterPostParagraph.tsx
 "use client";
-
+// Types
 import { TwitterParagrapDataProps } from "@/lib/types/typesParagraphEmbed";
 import { useEffect, useRef } from "react";
-
+// Composent
 export default function TwitterPostParagraph({
   node,
   langcode = "fr",
@@ -98,12 +97,12 @@ export default function TwitterPostParagraph({
         loader.remove();
       }
 
-      // Optionnel : force full width une dernière fois
-      const iframe = tweetRef.current?.querySelector("iframe");
-      if (iframe) {
-        iframe.style.width = "100%";
-        iframe.style.maxWidth = "none";
-      }
+      // // Optionnel : force full width une dernière fois
+      // const iframe = tweetRef.current?.querySelector("iframe");
+      // if (iframe) {
+      //   iframe.style.width = "100%";
+      //   iframe.style.maxWidth = "none";
+      // }
     }
 
     // Pas de cleanup du script (on veut le garder)
