@@ -15,7 +15,7 @@ export default function GridWrapper({ node, pembed }: { node: ItemsArticlesParag
 
   useEffect(() => {
     if (node.field_mode === "grid" && gridRef.current) {
-      UIkit.grid(gridRef.current, { masonry: "next", margin: 'uk-grid-margin-large' });
+      UIkit.grid(gridRef.current, { masonry: "next" });
     }
   }, [node.field_mode]);
 
@@ -27,16 +27,24 @@ export default function GridWrapper({ node, pembed }: { node: ItemsArticlesParag
   const overlayDisplay = ["overlay", "overlay_list"];
   const numberColumns = node?.field_mode_grid || "2";
   const numberColumnsMd = node?.field_mode_grid_md || "2";
-  // const hnSize = node?.field_font_size || "2xl";
-  // const gapColumns = node?.field_gap || "2";
-  const modeDisplay = node?.field_mode_display || "card_left";
+  const modeDisplay = node?.field_mode_display || "0";
+  const gapDisplay = node?.field_gap || "0";
+
+  const marginGrid =
+    {
+      "1": "uk-grid-small",
+      "8": "uk-grid-medium",
+      "12": "uk-grid-medium",
+      "16": "uk-grid-large",
+      "24": "uk-grid-large",
+    }[gapDisplay] || "uk-grid-collapse";
 
   return (
     <div className={`mx-auto flex w-full flex-col card-${pembed ? 'page' : 'emb'}`}>
       <BlockTitle container={node} classTitle={"title-block"} />
       <div
         ref={gridRef}
-        className={`relative md:grid md:grid-cols-${numberColumnsMd} lg:grid-cols-${parseInt(numberColumns) > 4 ? parseInt(numberColumns)-1 : numberColumns} xl:grid-cols-${numberColumns} md:items-start gap-5`}
+        className={`relative uk-grid uk-child-width-1-1 uk-child-width-1-${numberColumnsMd}@m uk-child-width-1-${parseInt(numberColumns) > 4 ? parseInt(numberColumns)-1 : numberColumns}@l uk-child-width-1-${numberColumns}@xl md:items-start ${marginGrid}`}
       >
         {node.field_articles.map((nd, i) => {
           if (overlayDisplay.includes(modeDisplay)) {

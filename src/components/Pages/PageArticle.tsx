@@ -122,7 +122,7 @@ export function PageArticle({ node, locale, theme }: { node: JournalNode; locale
             </SidebarSticky>
           </div>
           {/* Sidebar Sticky */}
-          <div className="max-md:hidden md:w-1/4">
+          <div className="md:w-1/4">
             <SidebarSticky
               options={{
                 offset: 90,

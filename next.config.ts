@@ -1,6 +1,8 @@
 import type {NextConfig} from "next";
 
 const isProd = process.env.NEXT_PUBLIC_DRUPAL_ENV === 'production';
+const baseDomain = process.env.DRUPAL_BASE || 'http://';
+const domain = process.env.DRUPAL_BASE_HOSTNAME || 'localhost';
 // import ObfuscatorPlugin from 'webpack-obfuscator';
 const nextConfig: NextConfig = {
 	poweredByHeader: false,
@@ -8,6 +10,14 @@ const nextConfig: NextConfig = {
 	// assetPrefix: isProd ? '/s' : undefined,
 	generateBuildId: async () => {
 		return 'build-' + Date.now().toString(36);
+	},
+	async rewrites() {
+		return [
+			{
+				source: '/media/:path*',
+				destination: `${baseDomain}${domain}/:path*`,
+			},
+		];
 	},
 	async headers() {
 		return [{
@@ -37,30 +47,17 @@ const nextConfig: NextConfig = {
 		remotePatterns: [
 			{
 				protocol: "https",
-				hostname: "yamn.baarr.fr",
+				hostname: domain,
 				port: "",
 				pathname: "/sites/default/files/**"
 			},
+		],
+		localPatterns: [
+			{
+				pathname: "/media/**"
+			}
 		]
 	},
-	// webpack: (config, {isServer, dev}) => {
-	// 	if (isProd && !isServer && !dev) {
-	// 		config.plugins.push(new ObfuscatorPlugin({
-	// 			compact: true,
-	// 			controlFlowFlattening: false,
-	// 			deadCodeInjection: false,
-	// 			stringArray: true,
-	// 			stringArrayEncoding: ['base64'],
-	// 			stringArrayThreshold: 0.8,
-	// 			rotateStringArray: true,
-	// 			selfDefending: true,
-	// 			// Ces deux lignes cachent vraiment "next/", "__NEXT_DATA__", "webpack", etc.
-	// 			renameGlobals: true,
-	// 			identifierNamesGenerator: 'mangled-shuffled'
-	// 		}, []));
-	// 	}
-	// 	return config;
-	// }
 };
 
 export default nextConfig;

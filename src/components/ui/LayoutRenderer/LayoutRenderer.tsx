@@ -1,8 +1,6 @@
 "use client";
 // Lib
 import { Fragment, ReactNode } from "react";
-import Image from "next/image";
-import Link from "next/link";
 // Types
 import {
   ItemsArticlesParagraphProps,

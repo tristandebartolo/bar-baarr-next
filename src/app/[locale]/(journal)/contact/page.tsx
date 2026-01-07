@@ -6,8 +6,8 @@ export default function Page() {
   return (
     <>
       {/* Panorama dynamique */}
-{/* 
-      <PanoramicViewer
+      
+      {/* <PanoramicViewer
         imageSrc="https://yamn.baarr.fr/sites/default/files/mediatheque/images/2025-12/uv-villa-web.jpg"
         imageAlt="Superbe panorama"
         heightPercentage={100} // optionnel

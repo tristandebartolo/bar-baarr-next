@@ -17,7 +17,7 @@ export type ArticlePropsType = {
   container: Pick<ItemsArticlesParagraphProps, "field_hn" | "field_show_title" | "field_font_size" | "field_mode_display" | "field_template_display">;
 };
 // Composent
-export default function ArticleNode({ article, container }: ArticlePropsType) {
+export default function ArticleOverlay({ article, container }: ArticlePropsType) {
   // States
   const [isLoading, setIsLoading] = useState(true);
   // Const
@@ -84,7 +84,7 @@ export default function ArticleNode({ article, container }: ArticlePropsType) {
     }[modeDisplayArticle] || "flex flex-col";
 
   return (
-    <Link data-link-trigger className="group relative " href={articleLink}>
+    <Link data-link-trigger className="group relative" href={articleLink}>
       <div
         key={article.nid}
         className={`group ${modeDisplayClass} transition-all duration-200 ease-in-out`}

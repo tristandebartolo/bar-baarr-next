@@ -6,6 +6,8 @@ import GridWrapper from "@/components/ui/DrupalParagraphsEmbed/ArticlesParagraph
 import SlideshowWrapper from "@/components/ui/DrupalParagraphsEmbed/ArticlesParagraph/SlideshowWrapper";
 import SliderWrapper from "@/components/ui/DrupalParagraphsEmbed/ArticlesParagraph/SliderWrapper";
 import NormalWrapper from "@/components/ui/DrupalParagraphsEmbed/ArticlesParagraph/NormalWrapper";
+// Styles
+import "./uikitStyle.scss";
 // Components Map
  // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const PARAGRAPH_ARTICLE_TYPE_MAP: Record<string, React.ComponentType<any>> = {

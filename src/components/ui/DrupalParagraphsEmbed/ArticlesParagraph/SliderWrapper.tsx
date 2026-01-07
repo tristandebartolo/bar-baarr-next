@@ -11,10 +11,10 @@ import "./SliderWrapper.scss";
 import { ItemsArticlesParagraphProps } from "@/lib/types/typesParagraphEmbed";
 import ArticleNode from "./ArticleUi/ArticleNode";
 
-export default function SliderWrapper({ node, pembed }: { node: ItemsArticlesParagraphProps, pembed: boolean }) {
+export default function SliderWrapper({ node, pembed }: { node: ItemsArticlesParagraphProps; pembed: boolean }) {
   const sliderRef = useRef<HTMLDivElement>(null);
   const [isMounted, setIsMounted] = useState(false);
-
+  console.log("pembed", pembed);
   const TitleTag = node?.field_hn ? (node.field_hn as keyof JSX.IntrinsicElements) : "h2";
 
   const hasArticles = node?.field_articles?.length > 0;
@@ -36,10 +36,9 @@ export default function SliderWrapper({ node, pembed }: { node: ItemsArticlesPar
       // center: false,
       // index: 2,
       pauseOnHover: true,
-      draggable: true
+      draggable: true,
       // sets: false,
     });
-
   }, [isMounted, node.field_mode]);
 
   if (!hasArticles) {
@@ -51,30 +50,38 @@ export default function SliderWrapper({ node, pembed }: { node: ItemsArticlesPar
   const numberColumns = node?.field_mode_grid || "2";
   const numberColumnsMd = node?.field_mode_grid_md || "2";
   const modeDisplay = node?.field_mode_display || "card_left";
+  const gapDisplay = node?.field_gap || "0";
+
+  const marginGrid =
+    {
+      "1": "uk-grid-small",
+      "8": "uk-grid-medium",
+      "12": "uk-grid-medium",
+      "16": "uk-grid-large",
+      "24": "uk-grid-large",
+    }[gapDisplay] || "uk-grid-collapse";
 
   // Contenu commun (titre + grille d'articles)
   const content = (
     <>
       {node.field_show_title && node.field_title && (
-        <TitleTag className={`mb-8 text-${hnSize} font-bold text-gray-900 dark:text-white`}>{node.field_title}</TitleTag>
+        <TitleTag className={`mb-24 text-${hnSize} font-bold text-gray-900 dark:text-white`}>{node.field_title}</TitleTag>
       )}
 
-      <div ref={sliderRef} className="relative mx-auto flex w-full flex-col">
-        <div className={`uk-slider-items uk-gr  id uk-child-width-1-1 uk-child-width-1-${numberColumns}@m relative md:grid md:grid-cols-${numberColumnsMd} lg:grid-cols-${parseInt(numberColumns) > 4 ? parseInt(numberColumns)-1 : numberColumns} xl:grid-cols-${numberColumns} md:items-start uk-grid-small gap-3`}>
+      <div ref={sliderRef} className="relative">
+        <div className={`uk-slider-items uk-grid ${marginGrid}`}>
           {node.field_articles.map((item, i) => (
             <div
               key={i}
-              className={`   w-1/1 md:w-1/${parseInt(numberColumns) > 4 ? parseInt(numberColumns)-1 : numberColumns}lg:w-1/${numberColumns}`}
+              className={`uk-width-1-1 uk-width-1-${parseInt(numberColumnsMd) > 4 ? parseInt(numberColumnsMd) - 1 : numberColumnsMd}@m uk-width-1-${numberColumns}@l`}
               draggable="true"
             >
-             
-              { overlayDisplay.includes(modeDisplay) && 
-                <p>hello</p>
-              }
+              {/* <p className="bg-amber-400/30">hello {numberColumns}</p>
+               <p className="bg-red-400/30">mode : {modeDisplay}</p>
+               <p className="bg-amber-400/30">hello {numberColumns}</p> */}
+              {overlayDisplay.includes(modeDisplay) && <p>hello</p>}
 
-              { !overlayDisplay.includes(modeDisplay) && 
-                <ArticleNode key={i} article={item} container={node} />
-              }
+              {!overlayDisplay.includes(modeDisplay) && <ArticleNode key={i} article={item} container={node} />}
             </div>
           ))}
         </div>
@@ -95,7 +102,7 @@ export default function SliderWrapper({ node, pembed }: { node: ItemsArticlesPar
 
   return (
     <div className="my-12">
-      <div className="mx-auto lg:max-w-7xl">{content}</div>
+      <div className="mx-auto flex flex-col">{content}</div>
     </div>
   );
 }

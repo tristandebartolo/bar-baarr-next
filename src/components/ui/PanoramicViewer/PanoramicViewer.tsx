@@ -86,7 +86,7 @@ export default function PanoramicViewer({
           width={dimensions.width}
           height={dimensions.height}
           priority
-          className="h-full w-auto object-cover object-left-top flex-shrink-0 max-w-none"
+          className="h-full w-auto object-cover object-top-left shrink-0 max-w-none"
         />
       </div>
     </section>
