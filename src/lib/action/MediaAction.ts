@@ -200,7 +200,7 @@ export async function getDataWithCookie(alias : string, session : Session | null
 			if (basicHash && basicHash.sd) {
 				
 				const sdf: SdUserType = basicHash.sd || {};
-				console.log('basicHash', sdf)
+				
 				if (sdf) {
 					baseRsHs = sdf.csrf_token;
 					sessionCookie = sdf.session_cookie as string;
@@ -211,6 +211,7 @@ export async function getDataWithCookie(alias : string, session : Session | null
 
   // const theme = cookieStore.get('theme')
 	const pth = `${basePath}${apiArticle}?alias=${alias}&mode=${mode}&langcode=${langcode}`;
+	console.log('pth', pth)
 	const data = await fetch(pth, {
 		credentials: 'include',
 		headers: {
