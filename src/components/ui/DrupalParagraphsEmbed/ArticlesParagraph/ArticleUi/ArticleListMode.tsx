@@ -54,7 +54,7 @@ export default function ArticleListMode({ article, container }: ArticleListModeP
       <article className="flex items-start gap-4 border-b border-gray-200 py-4 transition-colors duration-200 hover:bg-gray-50/50 dark:border-gray-700 dark:hover:bg-gray-800/50">
         {/* Image miniature */}
         {imageUrl && (
-          <div className="h-20 w-20 flex-shrink-0 overflow-hidden rounded-lg md:h-24 md:w-24">
+          <div className="h-20 w-20 shrink-0 overflow-hidden rounded-lg md:h-24 md:w-24">
             <picture>
               <source media="(max-width: 767px)" srcSet={`/media${imageUrlMobile as string}`} />
               <source media="(min-width: 768px)" srcSet={`/media${imageUrl}`} />
