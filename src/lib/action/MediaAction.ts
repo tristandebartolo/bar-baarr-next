@@ -14,6 +14,7 @@ import {
 	apiArticle
 } from "@/lib/helpers/index";
 import {SdUserType} from "../types";
+import {debugLog} from "@/lib/helpers/logger";
 
 /**
  * getData()
@@ -69,7 +70,7 @@ export async function getDataEmbed(type : string = "paragraph", uuid : string, l
  */
 export async function getAccueil($lancode : string = "fr") {
 	const pth = `${basePath}${baseHome}?lngcd=${$lancode}`;
-	console.log('pth', pth)
+	console.log('pth getAccueil', pth)
 	const data = await fetch(pth, {
 		headers: {
 			Authorization: `Basic ${baseRs}`
@@ -93,7 +94,7 @@ export async function getAccueil($lancode : string = "fr") {
 export async function getMetatags(alias : string = '', type : string = 'alias', display : string = 'alias', langcode : string = "fr") {
 	const baseRsHs = baseRs;
 	const pth = `${basePath}${baseArticleMeta}?alias=${alias}&tp=${type}&dpl=${display}&lngcd=${langcode}`;
-	console.log('pth', pth);
+	console.log('pth getMetatags', pth);
 	const data = await fetch(pth, {
 		headers: {
 			Authorization: `Basic ${baseRsHs}`
@@ -192,17 +193,28 @@ export async function getDataWithCookie(alias : string, session : Session | null
 	let baseRsHs = baseRs;
 	let sessionCookie = '';
 
+	await debugLog('getDataWithCookie - START', {
+		alias,
+		langcode,
+		mode,
+		hasSession: !!session
+	});
+
 	if (session ?. user) {
 		const userEmain = session.user?.email;
 		if (userEmain) {
 			const basicHash = await decrypt(userEmain);
 			if (basicHash && basicHash.sd) {
-				
+
 				const sdf: SdUserType = basicHash.sd || {};
-				
+
 				if (sdf) {
 					baseRsHs = sdf.csrf_token;
 					sessionCookie = sdf.session_cookie as string;
+					await debugLog('getDataWithCookie - Auth headers', {
+						hasCSRF: !!baseRsHs,
+						hasCookie: !!sessionCookie
+					});
 				}
 			}
 		}
@@ -210,23 +222,44 @@ export async function getDataWithCookie(alias : string, session : Session | null
 
   // const theme = cookieStore.get('theme')
 	const pth = `${basePath}${apiArticle}?alias=${alias}&mode=${mode}&langcode=${langcode}`;
-	console.log('pth', pth)
+
+	await debugLog('getDataWithCookie - Fetch URL', { url: pth });
+
 	const data = await fetch(pth, {
 		credentials: 'include',
 		headers: {
 			'X-CSRF-Token': baseRsHs as string,
 			'Cookie': sessionCookie as string,
-			
+
 			'Accept': 'application/json',
 		},
 		cache: "no-cache"
 	});
 
+	await debugLog('getDataWithCookie - Response', {
+		status: data.status,
+		statusText: data.statusText,
+		ok: data.ok,
+		redirected: data.redirected,
+		url: data.url
+	});
+
 	if (! data.ok) {
+		await debugLog('getDataWithCookie - ERROR', {
+			status: data.status,
+			statusText: data.statusText
+		});
 		return null;
 	}
 
 	const post = await data.json();
+
+	await debugLog('getDataWithCookie - Success', {
+		hasNode: !!post?.node,
+		success: post?.success,
+		bundle: post?.node?.bundle
+	});
+
 	return post;
 }
 
