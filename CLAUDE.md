@@ -1,123 +1,146 @@
-# CLAUDE.md - Bar-Baarr-Next
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## Vue d'ensemble
 
-Frontend Next.js 15 découplé pour un CMS Drupal - Journal/Magazine "Le journal du Bar.Bâ.a.r.r" (Yamn). Application multi-langue avec authentification, rendu dynamique de contenu et communication temps réel.
+Frontend Next.js 15 découplé pour un CMS Drupal - "Le journal du Bar.Bâ.a.r.r" (Yamn). Journal/magazine multi-langue avec authentification, rendu dynamique de contenu et fonctionnalités temps réel via Socket.IO.
 
 ## Stack technique
 
-- **Framework:** Next.js 15.5.7 avec App Router et React 19
+- **Framework:** Next.js 15.5.7 (App Router, Turbopack) + React 19
 - **Langage:** TypeScript 5 (strict mode)
-- **Styling:** Tailwind CSS 4 + SASS/SCSS modules
-- **Auth:** NextAuth 5 (beta) avec JWT
-- **i18n:** next-intl 4.6.0 (fr, en, it, de)
-- **UI:** UIKit 3.24, lucide-react, GSAP
+- **Styling:** Tailwind CSS 4 + SCSS modules + UIKit 3.24
+- **Auth:** NextAuth 5 (beta) avec JWT + credentials Drupal
+- **i18n:** next-intl (locales: fr, en, it, de)
 - **Temps réel:** Socket.IO 4.8
 - **CMS:** Drupal découplé via API REST
+
+## Commandes
+
+```bash
+yarn dev          # Serveur dev avec Turbopack
+yarn build        # Build production
+yarn start        # Démarrer serveur production
+yarn lint         # ESLint
+yarn ndmn         # Dev avec nodemon (tsx)
+yarn ndmn-build   # Build serveur + compilation TS
+yarn ndmn-start   # Serveur production avec Socket.IO
+```
+
+⚠️ Toujours utiliser yarn.
 
 ## Structure du projet
 
 ```
 /src
-├── /app                    # App Router (pages et layouts)
-│   ├── /[locale]           # Routes par locale (fr, en, it)
+├── /app                    # Pages App Router
+│   ├── /[locale]           # Routes préfixées par locale (fr, en, it, de)
 │   │   ├── /(admin)        # Section admin (protégée)
-│   │   ├── /(auth)         # Pages d'authentification
-│   │   └── /(journal)      # Pages articles/journal
-│   └── /api                # Routes API (NextAuth, admin)
-├── /components             # Composants React
-│   ├── /Auth               # Composants authentification
-│   ├── /Header, /Footer, /Navbar
-│   └── /ui                 # Composants UI réutilisables
-│       ├── /DrupalParagraphsEmbed  # Rendu paragraphes Drupal
-│       ├── /Article        # Composants article
-│       ├── /CookieBanner   # Gestion cookies
-│       └── /VideoEmbed     # Intégration vidéos
-├── /auth                   # Config NextAuth
-├── /context                # Contexts React (FrontContext)
-├── /i18n                   # Config internationalisation
-├── /lib                    # Utilitaires
-│   ├── /action             # Server actions
-│   ├── /helpers            # Fonctions helper
-│   └── /types              # Types TypeScript
-└── /translations           # Fichiers JSON i18n
+│   │   ├── /(auth)         # Pages auth (/club = login)
+│   │   └── /(journal)      # Articles via catch-all [...alias]
+│   └── /api                # Routes API NextAuth + admin
+├── /auth                   # Config NextAuth (auth.ts, session.ts)
+├── /components
+│   ├── /Navbar, /Header, /Footer
+│   └── /ui
+│       ├── /DrupalParagraphsEmbed  # Composants par type de paragraphe
+│       ├── /DrupalEntities         # Rendu dynamique d'entités
+│       └── /LayoutRenderer         # Dispatcher Layout Builder
+├── /context                # FrontContext (état global + Socket.IO)
+├── /lib
+│   ├── /action             # Server actions (MediaAction, cookies)
+│   ├── /helpers            # pathTools, utilsTools, etc.
+│   └── /types              # Définitions TypeScript
+├── /i18n                   # Config next-intl
+└── /translations           # Fichiers JSON traductions
 ```
 
-## Commandes
+## Fichiers et dossiers à ignorer
 
-```bash
-npm run dev          # Dev avec Turbopack
-npm run build        # Build production
-npm run start        # Démarrer serveur production
-npm run ndmn-build   # Build serveur Node custom
-npm run ndmn-start   # Démarrer serveur Node (Socket.IO)
-```
+⚠️ **IMPORTANT:** Lors de la recherche, l'analyse ou la modification de code, **TOUJOURS ignorer** :
+- `/trash` - Fichiers obsolètes ou en cours de suppression
+- `node_modules/` - Dépendances
+- `.next/` - Build Next.js
+- `dist/` - Build de production
 
-## Architecture
+Ne jamais lire, modifier ou référencer ces fichiers sauf demande explicite.
 
-### Rendu de contenu
-
-Le système utilise un pattern Layout Builder pour le rendu dynamique :
-
-- [LayoutRenderer.tsx](src/components/ui/LayoutRenderer/LayoutRenderer.tsx) - Dispatcher de composants
-- Types de paragraphes supportés : articles, galeries, vidéos, messages, X/Twitter embeds
-
-### Authentification
-
-1. Credentials provider vers API Drupal
-2. JWT encryption
-3. Session cookies secure/httpOnly
-4. CSRF token Drupal
+## Patterns d'architecture
 
 ### Fetching de données
 
-- **SSR** comme stratégie principale (composants async)
-- Server actions pour cookies et CSRF
-- API Drupal avec endpoints obfusqués
+Fetching côté serveur via server actions dans `src/lib/action/MediaAction.ts`:
+- `getDataByAlias()` - Récupérer page par alias URL
+- `getDataWithCookie()` - Fetch authentifié avec CSRF
+- `getAccueil()` - Données page d'accueil
+- `getMenu()` - Menu Drupal via API Linkset
+- `getDataEmbed()` - Données paragraphe/entité
 
-## Patterns importants
+Endpoints API configurés dans `src/lib/helpers/pathTools.ts` via variables d'environnement.
 
-### Composants serveur vs client
+### Rendu des paragraphes Drupal
 
-- Layouts racine en SSR (async)
-- Navbar charge les menus côté serveur
-- Composants client marqués `"use client"`
-- Suspense fallbacks pour opérations async
+1. **LayoutRenderer** distribue les sections Layout Builder aux composants
+2. **DrupalEntities** hydrate les tags `<drupal-paragraph>` et `<drupal-media>` dans le HTML
+3. **Composants paragraphe** mappent les types de bundle:
+   - `articles` / `articles_by_term` → ArticlesOrkesterParagraph
+   - `video` → VideoParagraph
+   - `galerie` → GalerieParagraph
+   - `message` → MessageParagraph
+   - `post_x` → XParagraph
 
-## Thème et styling
+### Séparation composants Serveur/Client
 
-### Variables CSS (globals.css)
+- Layouts racine sont des composants serveur async (fetch menus, données)
+- Fonctionnalités interactives utilisent la directive `"use client"`
+- Pattern: `Navbar.tsx` (serveur) → `NavbarClient.tsx` (client)
 
-```css
---color-x-one          # Couleur primaire
---color-x-one-hover    # État hover
---container            # Max-width (80rem)
---color-bgcontainer    # Background
---color-txtcontainer   # Texte
-```
+### Flux d'authentification
 
-### Thèmes de couleur
+1. Credentials envoyés à Drupal `/user/login`
+2. Cookie session + token CSRF extraits
+3. Chiffrés dans JWT via NextAuth
+4. Déchiffrés pour appels API authentifiés
 
-Classes disponibles : `.bleu`, `.apple`, `.fushia`, `.red`
+## Styling
 
-Dark mode : classe `.dark` ou media query système
+### Tailwind + UIKit
 
-## Conventions de code
+- Styling principal via utilitaires Tailwind
+- UIKit pour layouts complexes (grilles masonry, éléments sticky)
+- Modules CSS pour styles scopés aux composants
 
-- Path alias : `@/*` → `./src/*`
-- SCSS modules pour styles complexes
-- Server actions dans `/lib/action/`
-- Types centralisés dans `/lib/types/`
+### Système de thème
+
+Variables CSS dans `globals.css`:
+- `--color-x-one` / `--color-x-one-hover` - Couleur primaire
+- `--container` - Largeur max (80rem)
+- `--color-bgcontainer` / `--color-txtcontainer` - Background/texte
+
+Classes de thème: `.bleu`, `.apple`, `.fushia`, `.red`
+Mode sombre: classe `.dark` ou préférence système
+
+## Variables d'environnement
+
+Copier `default.env` vers `.env` et configurer:
+- `AUTH_SECRET` - Secret NextAuth (requis)
+- `DRUPAL_HOSTNAME` - URL backend Drupal
+- `JOURNAL_API` - Auth API (base64)
+- `NEXTAUTH_URL` - URL callback auth
+- `DRUPAL_LOAD_*` - Chemins endpoints API
+
+## Fichiers clés
+
+- [middleware.ts](src/middleware.ts) - Détection locale, routing auth
+- [auth/auth.ts](src/auth/auth.ts) - Configuration NextAuth
+- [lib/action/MediaAction.ts](src/lib/action/MediaAction.ts) - Fetching données
+- [lib/helpers/pathTools.ts](src/lib/helpers/pathTools.ts) - Endpoints API
+- [context/FrontContext.tsx](src/context/FrontContext.tsx) - État global
+- [components/ui/LayoutRenderer/LayoutRenderer.tsx](src/components/ui/LayoutRenderer/LayoutRenderer.tsx) - Dispatcher contenu
 
 ## Intégrations externes
 
-- **Drupal CMS:** (backend)
-- **PayPal:**
+- **Drupal CMS:** Backend contenu
+- **PayPal:** Paiements via @paypal/react-paypal-js
 - **Nodemailer:** Envoi d'emails
-
-## Notes de développement
-
-- Build output : `standalone` (Docker/serverless ready)
-- Images optimisées depuis `yamn.baarr.fr/sites/default/files/**`
-- Socket.IO configuré pour features temps réel (game rooms)
-- Middleware gère locale detection et routing
