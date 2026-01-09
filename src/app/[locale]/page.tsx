@@ -20,10 +20,6 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
   const { locale } = await params;
   const accueil = await getAccueil(locale);
 
-  // const alias = `/article?alias=${'/journal/culture/arts/addiction-un-cocktail-vampirique'}`;
-  // const accueilNode = await getApiArticlee(alias);
-  // console.log('res.json()', accueilNode);
-
   if (!accueil?.success && !accueil?.node) {
     return notFound();
   }

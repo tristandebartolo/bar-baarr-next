@@ -18,6 +18,9 @@ export default auth(async function middleware(req: NextRequest) {
 	const supportedLocales = ["fr", "en", "it"] as const;
 	const defaultLocale = "fr";
 
+	// Debug mode
+	const isDebug = process.env.NEXT_PUBLIC_DEBUG === "true";
+
 	// 1. Early return pour TOUTES les routes internes de Next-Auth
 	// Cela laisse Next-Auth les gérer nativement sans toucher au locale
 	if (pathname.startsWith("/.well-known") || pathname.startsWith("/api/auth")) {
@@ -28,6 +31,7 @@ export default auth(async function middleware(req: NextRequest) {
 
 	// 1. Redirection racine → /fr
 	if (pathname === "/" || pathname === "") {
+		if (isDebug) console.log("[MIDDLEWARE] Redirect root to /fr");
 		url.pathname = "/fr";
 		return NextResponse.redirect(url);
 	}
@@ -36,6 +40,7 @@ export default auth(async function middleware(req: NextRequest) {
 
 	// 2. Redirection racine → /fr + /alias
 	if (! pathnameHasLocale) {
+		if (isDebug) console.log(`[MIDDLEWARE] Add locale to path: ${pathname} -> /fr${pathname}`);
 		url.pathname = "/fr" + pathname;
 		return NextResponse.redirect(url);
 	}
@@ -45,6 +50,8 @@ export default auth(async function middleware(req: NextRequest) {
 	const potentialLocale = segments[0];
 
 	const locale = potentialLocale !== undefined && supportedLocales.includes(potentialLocale as typeof supportedLocales[number]) ? potentialLocale : defaultLocale;
+
+	if (isDebug) console.log(`[MIDDLEWARE] Processing: ${pathname} | Locale: ${locale}`);
 
 	// Set env vars
 	process.env.LANG = locale;

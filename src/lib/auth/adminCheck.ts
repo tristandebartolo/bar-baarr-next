@@ -21,7 +21,6 @@ export async function requireAdmin() {
 
 	// if (id && id === '1') {
 	const d = await decrypt(email)
-	console.log('d', d)
 	// 	return session.user;
 	// }
 

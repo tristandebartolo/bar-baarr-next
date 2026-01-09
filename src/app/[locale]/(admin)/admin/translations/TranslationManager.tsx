@@ -34,7 +34,6 @@ export default function TranslationManager({ section }: { section: string }) {
 
         if (res.ok) {
           const data = await res.json();
-          console.log("Langues chargées :", data.languages);
           setLanguages(data.languages || ["fr", "en"]);
         }
       } catch (e) {
