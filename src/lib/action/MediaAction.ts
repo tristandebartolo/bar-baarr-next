@@ -22,7 +22,6 @@ import {SdUserType} from "../types";
 export async function getData() {
 	let posts = null;
 	const pth = `${basePath}${baseArticles}?dpl=list`;
-	// "https://yamn.baarr.fr/iop0hgt5674/67gtrd450olkgp/rtcls"
 	const data = await fetch(pth, {
 		headers: {
 			Authorization: `Basic ${baseRs}`

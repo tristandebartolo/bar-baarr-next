@@ -8,21 +8,21 @@ export default function Page() {
       {/* Panorama dynamique */}
       
       {/* <PanoramicViewer
-        imageSrc="https://yamn.baarr.fr/sites/default/files/mediatheque/images/2025-12/uv-villa-web.jpg"
+        imageSrc="https://yamn.gentilmechant.com/sites/default/files/mediatheque/images/2025-12/uv-villa-web.jpg"
         imageAlt="Superbe panorama"
         heightPercentage={100} // optionnel
         headerHeight="0px" // obligatoire si header fixe
       /> */}
 
       {/* <PanoramicLightbox
-        thumbnailSrc="https://yamn.baarr.fr/sites/default/files/mediatheque/images/2025-12/uv-villa-web.jpg"
-        fullSrc="https://yamn.baarr.fr/sites/default/files/mediatheque/images/2025-12/uv-villa-web.jpg"
+        thumbnailSrc="https://yamn.gentilmechant.com/sites/default/files/mediatheque/images/2025-12/uv-villa-web.jpg"
+        fullSrc="https://yamn.gentilmechant.com/sites/default/files/mediatheque/images/2025-12/uv-villa-web.jpg"
         alt="Atelier d'artiste en panorama"
         thumbnailHeight="60vh"
         /> */}
 
       <PanoramicBanner
-        imageSrc="https://yamn.baarr.fr/sites/default/files/mediatheque/images/2025-12/uv-villa-web.jpg"
+        imageSrc="https://yamn.gentilmechant.com/sites/default/files/mediatheque/images/2025-12/uv-villa-web.jpg"
         alt="Exploration panoramique"
         height="50vh" // ou "75vh", "50vh", "25vh"
         initialCenterX={5800} // centre sur le pixel 2500 en X
@@ -31,8 +31,8 @@ export default function Page() {
       />
 
       <PanoramicLightbox
-        thumbnailSrc="https://yamn.baarr.fr/sites/default/files/mediatheque/images/2025-12/uv-villa-web.jpg"
-        fullSrc="https://yamn.baarr.fr/sites/default/files/mediatheque/images/2025-12/uv-villa-web.jpg"
+        thumbnailSrc="https://yamn.gentilmechant.com/sites/default/files/mediatheque/images/2025-12/uv-villa-web.jpg"
+        fullSrc="https://yamn.gentilmechant.com/sites/default/files/mediatheque/images/2025-12/uv-villa-web.jpg"
         alt="Atelier d'artiste en panorama"
         thumbnailHeight="60vh"
         />
