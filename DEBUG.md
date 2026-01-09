@@ -10,6 +10,21 @@ NEXT_PUBLIC_DEBUG=true
 
 ## Méthodes de debugging
 
+```ts
+// Importer l'helper
+import {debugLog} from "@/lib/helpers/logger";
+
+// Utiliser l'helper
+await debugLog('[DEBUG] log', {
+  alias,
+  langcode,
+  mode,
+  hasSession: !!session
+});
+
+
+```
+
 ### 1. Logs serveur (Terminal)
 
 Les logs des Server Components apparaissent dans le terminal où tourne le serveur:
