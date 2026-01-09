@@ -11,16 +11,27 @@ if [ -z "$NEXT_VERSION" ]; then
   exit 0
 fi
 
-# Find all files containing the version
-FILES=$(grep -rlF "$NEXT_VERSION" .next || true)
+# Find all TEXT files containing the version (exclude binaries)
+FILES=$(grep -rlIF "$NEXT_VERSION" .next 2>/dev/null || true)
 
 if [ -z "$FILES" ]; then
   echo "[postbuild] ✅ No occurrences of $NEXT_VERSION found in .next."
-#   exit 0
+  exit 0
 fi
 
-# Replace version with empty string
-echo "$FILES" | xargs sed -i "s/$NEXT_VERSION//g"
+# Replace version with empty string (macOS compatible)
+if [ "$(uname)" = "Darwin" ]; then
+  # macOS (BSD sed) requires empty string after -i
+  # Process each file individually to handle encoding issues
+  echo "$FILES" | while IFS= read -r file; do
+    if [ -f "$file" ]; then
+      LC_ALL=C sed -i '' "s/$NEXT_VERSION//g" "$file" 2>/dev/null || true
+    fi
+  done
+else
+  # Linux (GNU sed)
+  echo "$FILES" | xargs sed -i "s/$NEXT_VERSION//g"
+fi
 
 # BUILD_DIR=".next"
 # grep -rl "$NEXT_VERSION" "$BUILD_DIR" | xargs sed -i  "s/$NEXT_VERSION//g"

@@ -35,10 +35,12 @@
     ".next/types/**/*.ts",
     "next-env.d.ts",
     "src/types/*.d.ts",
-    ".build/types/**/*.ts",
     ".next/dev/types/**/*.ts"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "trash",
+    "dist",
+    "public/src"
   ]
 }

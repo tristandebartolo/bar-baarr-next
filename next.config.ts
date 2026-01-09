@@ -5,6 +5,10 @@ const baseDomain = process.env.DRUPAL_BASE || 'http://';
 const domain = process.env.DRUPAL_BASE_HOSTNAME || 'localhost';
 // import ObfuscatorPlugin from 'webpack-obfuscator';
 const nextConfig: NextConfig = {
+	typescript: {
+		// Affiche les erreurs TypeScript lors du build
+		ignoreBuildErrors: false,
+	},
 	poweredByHeader: false,
 	// distDir: isProd ? '.build' : '.next',
 	// assetPrefix: isProd ? '/s' : undefined,

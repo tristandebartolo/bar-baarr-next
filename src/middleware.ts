@@ -1,4 +1,11 @@
 // src/middleware.ts
+//
+// NOTE: Ce fichier reste en middleware.ts (et non proxy.ts) car NextAuth 5 beta
+// n'a pas encore documenté la compatibilité avec proxy.ts de Next.js 15+.
+// Migration prévue dès que NextAuth 5 stable sort avec documentation officielle.
+// Voir: https://github.com/nextauthjs/next-auth/releases
+// Voir: https://authjs.dev/getting-started/migrating-to-v5
+//
 import {NextRequest, NextResponse} from "next/server";
 import NextAuth from "next-auth";
 import {authConfig} from "@/auth/auth.config";
