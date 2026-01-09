@@ -1,13 +1,12 @@
 "use client";
 // Libs
-import { JSX, useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import UIkit from "uikit";
 // Types
 import { ItemsArticlesParagraphProps } from "@/lib/types/typesParagraphEmbed";
 // Composents
-import ArticleTitle from "@/components/ui/DrupalParagraphsEmbed/ArticlesParagraph/ArticleUi/ArticleTitle";
 import BlockTitle from "@/components/ui/DrupalParagraphsEmbed/ArticlesParagraph/ArticleUi/BlockTitle";
-import ArticleNode from "./ArticleUi/ArticleNode";
+import ArticleDisplaySelector from "./ArticleUi/ArticleDisplaySelector";
 // Composent
 export default function GridWrapper({ node, pembed }: { node: ItemsArticlesParagraphProps, pembed: boolean }) {
 
@@ -24,15 +23,13 @@ export default function GridWrapper({ node, pembed }: { node: ItemsArticlesParag
     return null;
   }
 
-  const overlayDisplay = ["overlay", "overlay_list"];
   const numberColumns = node?.field_mode_grid || "2";
   const numberColumnsMd = node?.field_mode_grid_md || "2";
-  const modeDisplay = node?.field_mode_display || "0";
   const gapDisplay = node?.field_gap || "0";
 
   const marginGrid =
     {
-      "1": "uk-grid-small",
+      "1": "uk-grid-small", 
       "8": "uk-grid-medium",
       "12": "uk-grid-medium",
       "16": "uk-grid-large",
@@ -46,17 +43,11 @@ export default function GridWrapper({ node, pembed }: { node: ItemsArticlesParag
         ref={gridRef}
         className={`relative uk-grid uk-child-width-1-1 uk-child-width-1-${numberColumnsMd}@m uk-child-width-1-${parseInt(numberColumns) > 4 ? parseInt(numberColumns)-1 : numberColumns}@l uk-child-width-1-${numberColumns}@xl md:items-start ${marginGrid}`}
       >
-        {node.field_articles.map((nd, i) => {
-          if (overlayDisplay.includes(modeDisplay)) {
-            return (
-              <div key={i} className={``}>
-                <ArticleTitle title={nd.title} container={node} />
-              </div>
-            );
-          } else {
-            return <ArticleNode key={i} article={nd} container={node} />;
-          }
-        })}
+        {node.field_articles.map((nd, i) => (
+          <div key={i}>
+            <ArticleDisplaySelector article={nd} container={node} />
+          </div>
+        ))}
       </div>
     </div>
   );

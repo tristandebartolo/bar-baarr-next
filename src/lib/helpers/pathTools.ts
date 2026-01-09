@@ -14,16 +14,3 @@ export const hostUrlRedirect = dev ? `${process.env.NEXT_PUBLIC_DRUPAL_HOSTNAME_
 
 // CF
 export const apiArticle = process.env.DRUPAL_API_ARTICLE;
-
-/**
- * Transforme une URL d'image Drupal en URL proxy locale
- * @param path - Chemin de l'image (ex: /sites/default/files/...)
- * @returns URL obfusquée (ex: /media/...)
- */
-export const getMediaUrl = (path: string | undefined | null): string => {
-	if (!path) return '';
-	if (path.startsWith('/sites/default/files/')) {
-		return path.replace('/sites/default/files/', '/media/');
-	}
-	return path;
-};

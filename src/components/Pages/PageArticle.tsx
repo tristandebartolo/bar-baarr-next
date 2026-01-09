@@ -58,7 +58,7 @@ export function PageArticle({ node, locale, theme }: { node: JournalNode; locale
           <header className="w-1/1">
             {node && (
               <>
-                <h1 className={`text-5xl md:text-7xl my-1 font-black`}>{node.title}</h1>
+                <h1 className={`my-1 text-5xl font-black md:text-7xl`}>{node.title}</h1>
 
                 {/* Chapô */}
                 {node.field_chapo && (
@@ -91,69 +91,71 @@ export function PageArticle({ node, locale, theme }: { node: JournalNode; locale
           <VideoWithConsent url={node.field_embed_url} />
         </div>
       )}
-      <div id="article-container" className="pp-article container mx-auto flex max-w-(--container) font-sans dark:text-cyan-50">
-        <div className="gap-8 px-5 md:flex">
-          {/* Sidebar Sticky */}
-          <div className="w-full md:w-1/4 max-lg:hidden">
-            <SidebarSticky
-              options={{
-                offset: 90,
-                end: "#article-container",
-                media: 768,
-                id: "sidebar-info",
-              }}
-            >
-              <div className="sidebar-wrapper pb-8">
-                {node && (
-                  <div className="">
-                    <h2 className={`my-1 text-4xl`}>{node.title}</h2>
-                    <div className="mt-4 flex flex-col gap-1 text-sm text-gray-600 dark:text-gray-400">
-                      {publishedDate && <p className="text-sm">{publishedDate}</p>}
-                      <ArticleAuthors authors={authorsData} />
-                      {timeOfRead && (
-                        <>
-                          <p className="">{timeOfRead} minutes de lecture</p>
-                        </>
-                      )}
+      <div id="article-container" className="pp-article container mx-auto flex max-w-(--container) px-5 font-sans dark:text-cyan-50">
+        <div className="w-full" >
+          <div className="uk-grid">
+            {/* Sidebar Sticky */}
+            <div className="uk-width-1-1 uk-width-1-4@m">
+              <SidebarSticky
+                options={{
+                  offset: 90,
+                  end: "#article-container",
+                  media: 959  ,
+                  id: "sidebar-info",
+                }}
+              >
+                <div className="sidebar-wrapper pb-8">
+                  {node && (
+                    <div className="">
+                      <h2 className={`my-1 text-4xl`}>{node.title}</h2>
+                      <div className="mt-4 flex flex-col gap-1 text-sm text-gray-600 dark:text-gray-400">
+                        {publishedDate && <p className="text-sm">{publishedDate}</p>}
+                        <ArticleAuthors authors={authorsData} />
+                        {timeOfRead && (
+                          <>
+                            <p className="">{timeOfRead} minutes de lecture</p>
+                          </>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                )}
-              </div>
-            </SidebarSticky>
-          </div>
-          {/* Sidebar Sticky */}
-          <div className="md:w-1/4">
-            <SidebarSticky
-              options={{
-                offset: 90,
-                end: "#article-container",
-                media: 768,
-                id: "sidebar-plus",
-              }}
-            >
-              <div className="sidebar-wrapper pb-8">
-                {isPublic && node?.sommaire && <JournalSommaire sommaire={node.sommaire} />}
-                {/* <p>
+                  )}
+                </div>
+              </SidebarSticky>
+            </div>
+            {/* Sidebar Sticky */}
+            <div className="uk-width-1-1 uk-width-1-4@m">
+              <SidebarSticky
+                options={{
+                  offset: 90,
+                  end: "#article-container",
+                  media: 959,
+                  id: "sidebar-plus",
+                }}
+              >
+                <div className="sidebar-wrapper pb-8">
+                  {isPublic && node?.sommaire && <JournalSommaire sommaire={node.sommaire} />}
+                  {/* <p>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus in consectetur ligula. Maecenas venenatis egestas turpis, at
                   gravida lectus dapibus at. Praesent quam nisl, euismod eu leo pretium, varius ullamcorper mi. Fusce at laoreet arcu. Sed tristique
                   ante tortor, lobortis auctor ipsum lacinia congue. Quisque blandit vulputate sollicitudin. Nam vel molestie purus. Quisque a ligula
                   sed urna elementum aliquam. Integer molestie eu libero eu imperdiet.
                 </p> */}
-              </div>
-            </SidebarSticky>
-          </div>
-          {/* Main */}
-          <div className="md:w-3/4">
-            <div className="gg-body pb-3">
-              <div className="flex flex-col gap-3">
-                {node.body && (
-                  <DrupalEntities langcode={locale} theme={theme}>
-                    <div dangerouslySetInnerHTML={{ __html: node.body }} />
-                  </DrupalEntities>
-                )}
-                {/* {node?.body && (
+                </div>
+              </SidebarSticky>
+            </div>
+            {/* Main */}
+            <div className="uk-width-1-1 uk-width-expand@m">
+              <div className="gg-body pb-3">
+                <div className="flex flex-col gap-3">
+                  {node.body && (
+                    <DrupalEntities langcode={locale} theme={theme}>
+                      <div dangerouslySetInnerHTML={{ __html: node.body }} />
+                    </DrupalEntities>
+                  )}
+                  {/* {node?.body && (
                   <div dangerouslySetInnerHTML={{ __html: node.body }} />
                 )} */}
+                </div>
               </div>
             </div>
           </div>

@@ -7,26 +7,29 @@ import Link from "next/link";
 import { PageType, ArticleType, ItemsArticlesParagraphProps } from "@/lib/types/typesParagraphEmbed";
 // Tools
 import { formatDate } from "@/lib/helpers/utilsTools";
-// Composents
+// Components
 import ArticlePlaceholder from "@/components/ui/Placeholders/ArticlePlaceholder";
-import ArticleTitle from "@/components/ui/DrupalParagraphsEmbed/ArticlesParagraph/ArticleUi/ArticleTitle";
+import ArticleTitle from "./ArticleTitle";
 import ArticleChapo from "./ArticleChapo";
-// Components propstype
-export type ArticlePropsType = {
+
+// Props type
+export type ArticleCardModeProps = {
   article: ArticleType | PageType;
   container: Pick<ItemsArticlesParagraphProps, "field_hn" | "field_show_title" | "field_font_size" | "field_mode_display" | "field_template_display">;
 };
-// Composent
-export default function ArticleOverlay({ article, container }: ArticlePropsType) {
-  // States
+
+/**
+ * ArticleCardMode - Affiche un article en mode carte
+ * Supporte les variantes: card, card_only, card_left, card_right, tiny, tiny_left, tiny_right
+ */
+export default function ArticleCardMode({ article, container }: ArticleCardModeProps) {
   const [isLoading, setIsLoading] = useState(true);
-  // Const
-  const modeDisplayArticle = container?.field_mode_display || "grid";
+
+  const modeDisplayArticle = container?.field_mode_display || "card";
   const fontSizeArticle = container?.field_font_size || "2xl";
-  const modeDisplayTemplateArticle = container?.field_template_display || "card";
-  // Effects
+  const modeDisplayTemplateArticle = container?.field_template_display || "tmp1";
+
   useEffect(() => {
-    // Simule un chargement
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 1000);
@@ -37,11 +40,8 @@ export default function ArticleOverlay({ article, container }: ArticlePropsType)
     return <ArticlePlaceholder modeDisplay={modeDisplayArticle} minHeight={"1"} fontSize={fontSizeArticle} />;
   }
 
-  // | 'card_only' | "card" | "card_left" | "card_right" | "tiny" | "tiny_left" | "tiny_right" | 'overlay' | 'list';
-
-  // const minHieght = node?.field_min_height || "1";
-  const activeTitleArticle = container?.field_show_title || false;
   const withoutImg = ["card", "card_left", "card_right", "tiny_right", "tiny_left"];
+  const isTiny = ["tiny", "tiny_right", "tiny_left"];
   const vignette = article.field_vignette?.[0]?.field_media_image?.[0];
   const imageUrl = vignette?.wide?.url || null;
   const imageUrlMobile = vignette?.wide?.mobile || null;
@@ -50,6 +50,7 @@ export default function ArticleOverlay({ article, container }: ArticlePropsType)
   const articleLink = article.path[0]?.alias || "#";
   const withImg = withoutImg.includes(modeDisplayArticle) && imageUrl;
   const publishedDate = article.created ? formatDate(article.created, "fr") : null;
+
   // Templates d'affichage (colonnes) basés sur field_template_display
   const templateDisplayColsImg =
     {
@@ -74,31 +75,27 @@ export default function ArticleOverlay({ article, container }: ArticlePropsType)
     {
       card: "flex flex-col",
       card_only: "flex flex-col",
-      list: "flex flex-col",
-      overlay: "flex flex-col",
       card_left: "flex flex-col items-stretch md:flex-row",
       card_right: "flex flex-col items-stretch md:flex-row-reverse",
+      overlay: "flex flex-col",
       tiny: "flex flex-col",
       tiny_left: "flex flex-col md:flex-row",
       tiny_right: "flex flex-col md:flex-row-reverse",
+      list: "flex flex-col"
     }[modeDisplayArticle] || "flex flex-col";
 
   return (
     <Link data-link-trigger className="group relative" href={articleLink}>
-      <div
+      <article
         key={article.nid}
-        className={`group ${modeDisplayClass} transition-all duration-200 ease-in-out`}
-        // onClick={() => (window.location.href = articleLink)}  cursor-pointer
+        className={`group ${modeDisplayClass} transition-all duration-200 ease-in-out gap-5`}
       >
-        {publishedDate && <p className="text-sm">{publishedDate}</p>}
-        {withImg && modeDisplayArticle !== 'card_only' && (
-          <div data-col-img="" className={`relation ${templateDisplayColsImg} mb-4 overflow-hidden rounded-xl border-0`}>
+
+        {withImg && modeDisplayArticle !== "card_only" && (
+          <div data-col-img="" className={`relation ${templateDisplayColsImg} overflow-hidden rounded-xl border-0`}>
             <picture>
-              {/* Mobile : charge l'image déjà cropée en 16:9 avec sujet centré */}
               <source media="(max-width: 767px)" srcSet={`/media${imageUrlMobile as string}`} />
-              {/* Desktop/tablette : charge l'image dans le format choisi par l'utilisateur */}
               <source media="(min-width: 768px)" srcSet={`/media${imageUrl}`} />
-              {/* Fallback pour Next.js Image (optimisation + lazy loading) */}
               <Image
                 priority
                 src={`/media${imageUrl}`}
@@ -113,36 +110,24 @@ export default function ArticleOverlay({ article, container }: ArticlePropsType)
 
         <div data-col-info="" className={`relative flex flex-col ${withImg ? templateDisplayCols : "w-1/1"} mx-auto justify-between p-0`}>
           <div data-col-body="">
+            {publishedDate && <p className="text-sm">{publishedDate}</p>}
             <ArticleTitle title={article.title} container={container} />
-            <ArticleChapo chapo={article} />
+            {/* <ArticleChapo chapo={article} tiny={isTiny.includes(modeDisplayArticle)} /> */}
           </div>
-          <div data-col-footer="" className="flex justify-between gap-4 text-sm">
+          {/* <div data-col-footer="" className="flex justify-between gap-4 text-sm">
             <div>
               <ul className="mb-10 flex gap-4">
-                {/* <li>
-                  <button
-                    onClick={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      console.log("hellooo");
-                    }}
-                    className="cursor-pointer hover:text-red-400"
-                    aria-label={false ? "Retirer des favoris" : "Ajouter aux favoris"}
-                  >
-                    <span className={`icon-gm-${false ? "favorite_outline" : "favorite"}`}></span>
-                  </button>
-                </li> */}
-                <li className="">
+                <li>
                   <button className="flex cursor-pointer items-center gap-1">
                     <span className="group-hover:underline">Lire la suite</span>
-                    <span className={`icon-gm-arrow_forward`}></span>
+                    <span className="icon-gm-arrow_forward" />
                   </button>
                 </li>
               </ul>
             </div>
-          </div>
+          </div> */}
         </div>
-      </div>
+      </article>
     </Link>
   );
 }
